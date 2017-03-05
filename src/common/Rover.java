@@ -146,6 +146,9 @@ public class Rover {
 		return returnList;
 	}
 	
+	
+	
+	
 	// sends a SCAN request to the server and puts the result in the scanMap array
 	protected ScanMap doScan() throws IOException {
 		Gson gson = new GsonBuilder()
@@ -179,7 +182,7 @@ public class Rover {
 	}
 	
 
-	// this takes the server response string, parses out the x and x values and
+	// this takes the server response string, parses out the x and y values and
 	// returns a Coord object	
 	protected static Coord extractLocationFromString(String sStr) {
 		int indexOf;

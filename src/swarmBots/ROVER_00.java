@@ -78,6 +78,7 @@ public class ROVER_00 extends Rover {
 			boolean goingSouth = false;
 			boolean stuck = false; // just means it did not change locations between requests,
 									// could be velocity limit or obstruction etc.
+			
 			boolean blocked = false;
 	
 			String[] cardinals = new String[4];
@@ -192,6 +193,14 @@ public class ROVER_00 extends Rover {
 	
 				// test for stuckness
 				stuck = currentLoc.equals(previousLoc);	
+				
+				if(stuck){
+					
+					
+					
+					
+				}
+				
 				
 				// this is the Rovers HeartBeat, it regulates how fast the Rover cycles through the control loop
 				Thread.sleep(sleepTime);

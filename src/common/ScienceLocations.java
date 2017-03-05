@@ -73,6 +73,7 @@ public class ScienceLocations {
 		 */
 		
 		public void loadExampleTestScienceLocations(){
+			
 			// put some sample science in the world
 			scienceHash.put(new Coord(20,14), Science.RADIOACTIVE);
 			scienceHash.put(new Coord(21,20), Science.CRYSTAL);
@@ -85,6 +86,7 @@ public class ScienceLocations {
 		}
 		
 		public void loadSmallExampleTestScienceLocations(){
+			
 			// put some sample science in the world
 			scienceHash.put(new Coord(20,20), Science.RADIOACTIVE);
 		}

@@ -13,6 +13,7 @@ public enum RoverToolType {
 	
     public static RoverToolType getEnum(String input){
     	RoverToolType output;
+    	
     	switch(input){
     	case "NONE":
     		output = RoverToolType.NONE;

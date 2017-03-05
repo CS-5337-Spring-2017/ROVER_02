@@ -1,6 +1,7 @@
 package enums;
 
 public enum Science {
+	
 	NONE("N"), 
 	RADIOACTIVE("Y"), 
 	ORGANIC("O"), 

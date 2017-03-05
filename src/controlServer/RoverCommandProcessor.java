@@ -57,10 +57,15 @@ public class RoverCommandProcessor {
     private static PlanetMap planetMap = null; // = new PlanetMap(mapWidth, mapHeight); 
     private static RoverLocations roverLocations = new RoverLocations();
     private static ScienceLocations scienceLocations = new ScienceLocations();
+
+    
     // need to keep a separate array of collected science for each corporation or team
+    // SCIECNE CLASS HAS THE LOCATION AND WHICH ROVER GOT THE SCIENCE ITEM. (NAIF)
     private static ArrayList<Science> collectedScience_0 = new ArrayList<Science>();
     private static ArrayList<Science> collectedScience_1 = new ArrayList<Science>();
     private static ArrayList<Science> collectedScience_2 = new ArrayList<Science>();
+    
+    
     private static ArrayList<ArrayList<Science>> corpCollectedScience = new ArrayList<ArrayList<Science>>();
     private static ArrayList<String> connectedRovers = new ArrayList<String>();
     private static HashMap<String, RoverStats> listOfRovers = new HashMap<String, RoverStats>();
@@ -116,6 +121,7 @@ public class RoverCommandProcessor {
         corpCollectedScience.add(collectedScience_0);
         corpCollectedScience.add(collectedScience_1);
         corpCollectedScience.add(collectedScience_2);
+        
         
         mapInit.parseInputFromDisplayTextFile(mapFileName);        
         
@@ -219,7 +225,8 @@ public class RoverCommandProcessor {
                 
 
                 // ##### Run the Rover Control Processor server #####
-                while (roversAreGO) {	
+                while (roversAreGO) {
+                	
                 	//read command input from the Rover
                     String input = inFromRover.readLine();
 
@@ -247,6 +254,7 @@ public class RoverCommandProcessor {
                 	 * ******************** MOVE **********************
                 	 */                   
                     if (input.startsWith("MOVE")){
+                    	
                     	//System.out.println("SWARM: ------ MOVE ------"); //debug test input parsing
                     	// trim header off of input string
                     	String dir = input.substring(5);	
@@ -354,7 +362,10 @@ public class RoverCommandProcessor {
 	                    			rover.scienceCargo.add(foundScience);
 	                    			corpCollectedScience.get(getCorpNumber(rover)).add(foundScience);
 	                    			rover.updateGatherTime();
-	                    			System.out.println("SwarmServer: corp " + getCorpNumber(rover) + " total science = " + corpCollectedScience.get(getCorpNumber(rover)).size());
+	                    			
+	                    			// ADDED ......."Collected by: " + collectedScience_0.get(1).getHarvestedBy()...... TO GET THE ROVER WHO COLLECTED THE SCIENCE. (NAIF)
+	                    			System.out.println("SwarmServer: corp " + getCorpNumber(rover) + " total science = " + corpCollectedScience.get(getCorpNumber(rover)).size() + 
+	                    					"Collected by: " + collectedScience_0.get(1).getHarvestedBy());
 	                    		}
 	                    		
 	                    		if(((rover.getTool_1() == RoverToolType.EXCAVATOR || (rover.getTool_2() == RoverToolType.EXCAVATOR)) 
