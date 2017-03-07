@@ -14,14 +14,14 @@ import java.util.List;
 public enum RoverConfiguration {
 	// (Drive type, accessory slot 1, accessory slot 2)
 	NONE,
-	
-	ROVER_01 ("TREADS", "EXCAVATOR", "SPECTRAL_SENSOR"),
-	ROVER_02 ("WALKER", "EXCAVATOR", "DRILL"),
-	ROVER_03 ("WHEELS", "EXCAVATOR", "CHEMICAL_SENSOR"),
+
+	ROVER_01 ("WHEELS", "EXCAVATOR", "CHEMICAL_SENSOR"),
+	ROVER_02 ("WALKER", "RANGE_BOOTER", "DRILL"),
+	ROVER_03 ("TREADS", "EXCAVATOR", "RADAR_SENSOR"),
+
+	//not currently being used
 	ROVER_04 ("WALKER", "DRILL", "RADIATION_SENSOR"),
 	ROVER_05 ("TREADS", "EXCAVATOR", "RADAR_SENSOR"),
-
-    //not currently being used
 	ROVER_06 ("WHEELS", "RANGE_BOOTER", "RADIATION_SENSOR"),
 	ROVER_07 ("TREADS", "EXCAVATOR", "RADAR_SENSOR"),
 	ROVER_08 ("TREADS", "EXCAVATOR", "SPECTRAL_SENSOR"),
@@ -29,7 +29,7 @@ public enum RoverConfiguration {
 	ROVER_10 ("WHEELS", "RANGE_BOOTER", "RADIATION_SENSOR"),
 	ROVER_11 ("WALKER", "DRILL", "EXCAVATOR"),
 	ROVER_12 ("WHEELS", "RANGE_BOOTER", "SPECTRAL_SENSOR"),
-	ROVER_13 ("TREADS", "EXCAVATOR", "CHEMICAL_SENSOR"),
+	ROVER_13 ("WHEELS", "EXCAVATOR", "CHEMICAL_SENSOR"),
 	ROVER_14 ("WHEELS", "RANGE_BOOTER", "CHEMICAL_SENSOR"),
 	ROVER_15 ("TREADS", "DRILL", "EXCAVATOR"),
 	ROVER_16 ("WALKER", "DRILL", "RADIATION_SENSOR"),
@@ -37,7 +37,7 @@ public enum RoverConfiguration {
 	ROVER_18 ("WHEELS", "EXCAVATOR", "RADAR_SENSOR"),
 	ROVER_19 ("NONE", "NONE", "NONE"),
 	ROVER_20 ("NONE", "NONE", "NONE"),
-	
+
 	// sample test rovers
 	ROVER_00 ("WHEELS", "RADIATION_SENSOR", "RADAR_SENSOR"),
 	ROVER_90 ("WHEELS", "RANGE_BOOTER", "RADIATION_SENSOR"),
@@ -50,7 +50,7 @@ public enum RoverConfiguration {
 	ROVER_97 ("WHEELS", "RANGE_BOOTER", "RADAR_SENSOR"),
 	ROVER_98 ("WALKER", "DRILL", "SPECTRAL_SENSOR"),
 	ROVER_99 ("TREADS", "SPECTRAL_SENSOR", "CHEMICAL_SENSOR");
-	
+
     private final List<String> members;
     private RoverConfiguration(String... members){
         this.members=Arrays.asList(members);
@@ -59,10 +59,10 @@ public enum RoverConfiguration {
         // defensive copy, because the original list is mutable
         return new ArrayList<String>(members);
     }
-    
+
     public static RoverConfiguration getEnum(String input){
     	RoverConfiguration output;
-    	
+
     	switch(input){
     	case "ROVER_00":
     		output = RoverConfiguration.ROVER_00;
@@ -102,7 +102,7 @@ public enum RoverConfiguration {
     		break;
     	case "ROVER_12":
     		output = RoverConfiguration.ROVER_12;
-    		break;    		
+    		break;
     	case "ROVER_13":
     		output = RoverConfiguration.ROVER_13;
     		break;
@@ -127,7 +127,7 @@ public enum RoverConfiguration {
     	case "ROVER_20":
     		output = RoverConfiguration.ROVER_20;
     		break;
-    	
+
     	// Sample Rover Set
     	case "ROVER_90":
     		output = RoverConfiguration.ROVER_90;
@@ -137,7 +137,7 @@ public enum RoverConfiguration {
     		break;
     	case "ROVER_92":
     		output = RoverConfiguration.ROVER_92;
-    		break;    		
+    		break;
     	case "ROVER_93":
     		output = RoverConfiguration.ROVER_93;
     		break;
@@ -161,7 +161,7 @@ public enum RoverConfiguration {
     		break;
     	default:
     		output = RoverConfiguration.NONE;
-    	}	
+    	}
     	return output;
     }
 }
