@@ -25,16 +25,16 @@ import enums.Terrain;
  * publishing their code examples
  */
 
-public class ROVER_00 extends Rover {
+public class ROVER_02 extends Rover {
 
 
-	public ROVER_00() {
+	public ROVER_02() {
 		// constructor
 		System.out.println("ROVER_00 rover object constructed");
 		rovername = "ROVER_00";
 	}
 	
-	public ROVER_00(String serverAddress) {
+	public ROVER_02(String serverAddress) {
 		// constructor
 		System.out.println("ROVER_00 rover object constructed");
 		rovername = "ROVER_00";
@@ -233,14 +233,14 @@ public class ROVER_00 extends Rover {
 	 * Runs the client
 	 */
 	public static void main(String[] args) throws Exception {
-		ROVER_00 client;
+		ROVER_02 client;
     	// if a command line argument is present it is used
 		// as the IP address for connection to SwarmServer instead of localhost 
 		
 		if(!(args.length == 0)){
-			client = new ROVER_00(args[0]);
+			client = new ROVER_02(args[0]);
 		} else {
-			client = new ROVER_00();
+			client = new ROVER_02();
 		}
 		
 		client.run();
