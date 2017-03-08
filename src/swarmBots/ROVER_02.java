@@ -4,19 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import common.Coord;
 import common.MapTile;
 import common.Rover;
-import common.ScanMap;
 import enums.Terrain;
 
 /**
@@ -30,14 +21,14 @@ public class ROVER_02 extends Rover {
 
 	public ROVER_02() {
 		// constructor
-		System.out.println("ROVER_00 rover object constructed");
-		rovername = "ROVER_00";
+		System.out.println("ROVER_02 rover object constructed");
+		rovername = "ROVER_02";
 	}
 	
 	public ROVER_02(String serverAddress) {
 		// constructor
-		System.out.println("ROVER_00 rover object constructed");
-		rovername = "ROVER_00";
+		System.out.println("ROVER_02 rover object constructed");
+		rovername = "ROVER_02";
 		SERVER_ADDRESS = serverAddress;
 	}
 
@@ -86,7 +77,9 @@ public class ROVER_02 extends Rover {
 			cardinals[1] = "E";
 			cardinals[2] = "S";
 			cardinals[3] = "W";	
-			String currentDir = cardinals[0];		
+			
+			// this is the first direction the rover is going to move.
+			String currentDir = cardinals[2];		
 			
 			/**
 			 *  ### Retrieve static values from RCP ###
@@ -158,8 +151,8 @@ public class ROVER_02 extends Rover {
 					if (goingSouth) {
 						// check scanMap to see if path is blocked to the south
 						// (scanMap may be old data by now)
+						// walker rover can't go over SAND only. 
 						if (scanMapTiles[centerIndex][centerIndex +1].getHasRover() 
-								|| scanMapTiles[centerIndex][centerIndex +1].getTerrain() == Terrain.ROCK
 								|| scanMapTiles[centerIndex][centerIndex +1].getTerrain() == Terrain.SAND
 								|| scanMapTiles[centerIndex][centerIndex +1].getTerrain() == Terrain.NONE) {
 							blocked = true;
@@ -172,9 +165,7 @@ public class ROVER_02 extends Rover {
 					} else {
 						// check scanMap to see if path is blocked to the north
 						// (scanMap may be old data by now)
-						
 						if (scanMapTiles[centerIndex][centerIndex -1].getHasRover() 
-								|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.ROCK
 								|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.SAND
 								|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.NONE) {
 							blocked = true;
@@ -204,7 +195,7 @@ public class ROVER_02 extends Rover {
 				// this is the Rovers HeartBeat, it regulates how fast the Rover cycles through the control loop
 				Thread.sleep(sleepTime);
 				
-				System.out.println("ROVER_00 ------------ bottom process control --------------"); 
+				System.out.println(rovername + " ------------ bottom process control --------------"); 
 			}  // END of Rover control While(true) loop
 		
 		// This catch block closes the open socket connection to the server
@@ -216,7 +207,7 @@ public class ROVER_02 extends Rover {
 	            try {
 	            	socket.close();
 	            } catch (IOException e) {
-	            	System.out.println("ROVER_00 problem closing socket");
+	            	System.out.println(rovername + " problem closing socket");
 	            }
 	        }
 	    }
