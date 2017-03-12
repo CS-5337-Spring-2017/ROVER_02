@@ -31,7 +31,9 @@ public class ROVER_02 extends Rover {
 		rovername = "ROVER_02";
 		SERVER_ADDRESS = serverAddress;
 	}
-
+	
+	
+	
 	/**
 	 * Connects to the server then enters the processing loop.
 	 */
@@ -132,7 +134,14 @@ public class ROVER_02 extends Rover {
 				
 				if (blocked) {
 					if(stepCount > 0){
-						moveSouth();
+						// method to check if you can move South
+					boolean checkMoveSouth = checkMoveNorthSouth();
+						if(checkMoveSouth){
+							moveSouth();
+						}else{
+							moveEast();
+						}
+						
 						stepCount -= 1;
 					}
 					else {
@@ -189,13 +198,13 @@ public class ROVER_02 extends Rover {
 				
 				
 				// Naif, My idea is to get the (x,y) of the rover when stuck and then move one step back and find alternative paths. 
-//				if(stuck){
-//					
-//				int x = getCurrentLocation().xpos;
-//				int y = getCurrentLocation().ypos;
-//				
-//					
-//				}
+				if(stuck){
+					
+					
+				
+					
+				}
+				
 				
 				
 				// this is the Rovers HeartBeat, it regulates how fast the Rover cycles through the control loop
@@ -222,7 +231,21 @@ public class ROVER_02 extends Rover {
 	
 	// ####################### Support Methods #############################
 	
-
+	// a method to check the East and West move before moving. 
+		public boolean checkMoveNorthSouth(){
+			
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			
+			if (scanMapTiles[centerIndex][centerIndex-1].getHasRover() 
+					|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.NONE) {
+				return false;
+			} else {
+				// request to server to move
+				return true;
+			}
+		}
 	
 
 
