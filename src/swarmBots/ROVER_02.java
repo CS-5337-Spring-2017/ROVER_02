@@ -238,9 +238,11 @@ public class ROVER_02 extends Rover {
 			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 			
 			if (scanMapTiles[centerIndex][centerIndex-1].getHasRover() 
-					|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.SAND
-					|| scanMapTiles[centerIndex][centerIndex -1].getTerrain() == Terrain.NONE) {
+					|| scanMapTiles[centerIndex][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex][centerIndex].getTerrain() == Terrain.NONE) {
+				
 				return false;
+				
 			} else {
 				// request to server to move
 				return true;
