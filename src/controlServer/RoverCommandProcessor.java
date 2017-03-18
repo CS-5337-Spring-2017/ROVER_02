@@ -49,7 +49,8 @@ public class RoverCommandProcessor {
     private static final int PORT = 9537; // because ... CSULA class number CS-5337
     
     private static SwarmMapInit mapInit = new SwarmMapInit();
-    private static String mapFileName = "MapDefault.txt";
+    //private static String mapFileName = "MapDefault.txt";
+    private static String mapFileName = "MovementTestMap.txt";	
     //private static String mapFileName = "convertedPaintMapToTextMap.txt";
 
     private static int mapWidth = 0;

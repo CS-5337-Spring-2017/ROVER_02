@@ -132,8 +132,14 @@ public class ROVER_02 extends Rover {
 				
 				if (blocked) {
 					if(stepCount > 0){
-						moveSouth();
-						stepCount -= 1;
+						if(southBlocked()){	
+							moveEast();
+							stepCount -=1;
+						}
+						else{
+							moveSouth();
+							stepCount -=1;
+						}
 					}
 					else {
 						blocked = false;
@@ -177,7 +183,6 @@ public class ROVER_02 extends Rover {
 						}					
 					}
 				}
-		
 			
 	
 				// another call for current location
@@ -222,6 +227,23 @@ public class ROVER_02 extends Rover {
 	
 	// ####################### Support Methods #############################
 	
+	//checking if moving south is allowed
+	public boolean southBlocked(){
+		// pull the MapTile array out of the ScanMap object
+		MapTile[][] scanMapTiles = scanMap.getScanMap();
+		int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+		
+		if (scanMapTiles[centerIndex -1][centerIndex].getHasRover() 
+				|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
+				|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.NONE) {
+		
+			return true;
+		} else {
+			// request to server to move
+			return false;
+		}
+	}
+	//end check moving south
 
 	
 
