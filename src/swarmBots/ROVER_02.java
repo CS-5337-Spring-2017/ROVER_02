@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import common.Communication;
 import common.MapTile;
 import common.Rover;
 import enums.Terrain;
@@ -50,6 +51,10 @@ public class ROVER_02 extends Rover {
 			
 			// Process all messages from server, wait until server requests Rover ID
 			// name - Return Rover Name to complete connection
+			
+			// Initialize communication server connection to send map updates
+			Communication communication = new Communication("http://localhost:3000/api", rovername, "open_secret");
+
 			while (true) {
 				String line = receiveFrom_RCP.readLine();
 				if (line.startsWith("SUBMITNAME")) {
@@ -152,6 +157,8 @@ public class ROVER_02 extends Rover {
 					// pull the MapTile array out of the ScanMap object
 					MapTile[][] scanMapTiles = scanMap.getScanMap();
 					int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+					
+					communication.postScanMapTiles(currentLoc, scanMapTiles);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
