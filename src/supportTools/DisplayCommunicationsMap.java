@@ -32,7 +32,7 @@ public class DisplayCommunicationsMap {
 	DisplayCommunicationsMap(String url, String corp_secret, String rovername){
 		this.url = "http://localhost:3000/api";
 		this.corp_secret = "gz5YhL70a2";		
-		this.rovername = "ROVER_90";
+		this.rovername = "ROVER_02";
 		com = new Communication(url, rovername, corp_secret);
 		
 	}
@@ -125,7 +125,7 @@ public class DisplayCommunicationsMap {
 		// TODO Auto-generated method stub
 		String url = "http://localhost:3000/api";
 		String corp_secret = "gz5YhL70a2";		
-		String rovername = "ROVER_90";
+		String rovername = "ROVER_02";
 		
 		DisplayCommunicationsMap dcm = new DisplayCommunicationsMap(url, corp_secret, rovername);
 		
