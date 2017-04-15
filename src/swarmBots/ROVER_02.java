@@ -54,6 +54,8 @@ public class ROVER_02 extends Rover {
 			
 			// Initialize communication server connection to send map updates
 			Communication communication = new Communication("http://localhost:3000/api", rovername, "open_secret");
+			
+			
 
 			while (true) {
 				String line = receiveFrom_RCP.readLine();
@@ -252,7 +254,11 @@ public class ROVER_02 extends Rover {
 	}
 	//end check moving south
 
-	
+	//method for the JSON object
+		public static void sendJSON(){
+			
+		}
+	//end JSON method
 
 
 	/**

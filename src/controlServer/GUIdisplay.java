@@ -21,6 +21,7 @@ import javax.swing.Timer;
 
 import UI_support.GraphicTile;
 import UI_support.LineSegment;
+import common.Communication;
 import common.Coord;
 import common.PlanetMap;
 import common.RoverLocations;
@@ -393,3 +394,4 @@ interface MyGUIAppendable {
 	public void setScores(String scoreBlue, String scoreGreen, String scoreSample);
 
 }
+
