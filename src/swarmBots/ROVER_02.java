@@ -64,7 +64,6 @@ public class ROVER_02 extends Rover {
 				}
 			}
 	
-	
 			
 			/**
 			 *  ### Setting up variables to be used in the Rover control loop ###
@@ -159,6 +158,7 @@ public class ROVER_02 extends Rover {
 					int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 					
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
+					
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
@@ -194,7 +194,8 @@ public class ROVER_02 extends Rover {
 	
 				// another call for current location
 				currentLoc = getCurrentLocation();
-
+				
+				
 	
 				// test for stuckness
 				stuck = currentLoc.equals(previousLoc);	

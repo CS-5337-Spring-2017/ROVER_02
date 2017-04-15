@@ -51,6 +51,7 @@ public class Communication {
             con.setRequestProperty("Rover-Name", rovername);
             con.setRequestProperty("Corp-Secret", corp_secret);
             con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Location", currentLoc.toString());
 
             byte[] jsonBytes = data.toString().getBytes("UTF-8");
 
