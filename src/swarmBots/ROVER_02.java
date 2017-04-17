@@ -139,12 +139,24 @@ public class ROVER_02 extends Rover {
 				
 				if (blocked) {
 					if(stepCount > 0){
-						if(southBlocked()){	
+						if(southBlocked() == true && westBlocked() == false){
+							//System.out.println("-----HELP ME I AM BLOCKED FROM SOUTH!!-----");
+							moveWest();
+							stepCount -=1;
+						}
+						else if(southBlocked() == true && westBlocked() == true){
+							//System.out.println("-----HELP ME I AM BLOCKED FROM SOUTH!!-----");
 							moveEast();
+							stepCount -=1;
+						}
+						else if(southBlocked() == true && eastBlocked() == true){
+							//System.out.println("-----HELP ME I AM BLOCKED FROM SOUTH!!-----");
+							moveWest();
 							stepCount -=1;
 						}
 						else{
 							moveSouth();
+							
 							stepCount -=1;
 						}
 					}
@@ -183,7 +195,7 @@ public class ROVER_02 extends Rover {
 						if (scanMapTiles[centerIndex +1][centerIndex].getHasRover() 
 								|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.SAND
 								|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.NONE) {
-							
+							System.out.println(">>>>>>>EAST BLOCKED<<<<<<<<");
 							blocked = true;
 							stepCount = 5;  //side stepping
 							} else {
@@ -200,17 +212,6 @@ public class ROVER_02 extends Rover {
 	
 				// test for stuckness
 				stuck = currentLoc.equals(previousLoc);	
-				
-				
-				// Naif, My idea is to get the (x,y) of the rover when stuck and then move one step back and find alternative paths. 
-//				if(stuck){
-//					
-//				int x = getCurrentLocation().xpos;
-//				int y = getCurrentLocation().ypos;
-//				
-//					
-//				}
-				
 				
 				// this is the Rovers HeartBeat, it regulates how fast the Rover cycles through the control loop
 				Thread.sleep(sleepTime);
@@ -241,11 +242,11 @@ public class ROVER_02 extends Rover {
 		// pull the MapTile array out of the ScanMap object
 		MapTile[][] scanMapTiles = scanMap.getScanMap();
 		int centerIndex = (scanMap.getEdgeSize() - 1)/2;
-		
-		if (scanMapTiles[centerIndex -1][centerIndex].getHasRover() 
-				|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
-				|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.NONE) {
-		
+		// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+		if (scanMapTiles[centerIndex][centerIndex+1].getHasRover() 
+				|| scanMapTiles[centerIndex][centerIndex+1].getTerrain() == Terrain.SAND
+				|| scanMapTiles[centerIndex][centerIndex+1].getTerrain() == Terrain.NONE) {
+			System.out.println(">>>>>>>SOUTH BLOCKED<<<<<<<<");
 			return true;
 		} else {
 			// request to server to move
@@ -253,6 +254,61 @@ public class ROVER_02 extends Rover {
 		}
 	}
 	//end check moving south
+	
+	//checking if moving east is allowed
+		public boolean eastBlocked(){
+			// pull the MapTile array out of the ScanMap object
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+			if (scanMapTiles[centerIndex+1][centerIndex].getHasRover() 
+					|| scanMapTiles[centerIndex+1][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex+1][centerIndex].getTerrain() == Terrain.NONE) {
+					System.out.println(">>>>>>>EAST BLOCKED<<<<<<<<");
+				return true;
+			} else {
+				// request to server to move
+				return false;
+			}
+		}
+		//end check moving east
+		
+		//checking if moving west is allowed
+		public boolean westBlocked(){
+			// pull the MapTile array out of the ScanMap object
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+			if (scanMapTiles[centerIndex-1][centerIndex].getHasRover() 
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.NONE) {
+					System.out.println(">>>>>>>WEST BLOCKED<<<<<<<<");
+				return true;
+			} else {
+				// request to server to move
+				return false;
+			}
+		}
+		//end check moving west	
+		
+		
+		//checking if moving north is allowed
+		public boolean northBlocked(){
+			// pull the MapTile array out of the ScanMap object
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+			if (scanMapTiles[centerIndex-1][centerIndex].getHasRover() 
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.NONE) {
+					System.out.println(">>>>>>>NORTH BLOCKED<<<<<<<<");
+				return true;
+			} else {
+				// request to server to move
+				return false;
+			}
+		}
+		//end check moving north	
 
 	//method for the JSON object
 		public static void sendJSON(){
