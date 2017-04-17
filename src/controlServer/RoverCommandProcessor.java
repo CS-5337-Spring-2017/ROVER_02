@@ -50,9 +50,7 @@ public class RoverCommandProcessor {
     
     private static SwarmMapInit mapInit = new SwarmMapInit();
     //private static String mapFileName = "MapDefault.txt";
-    //private static String mapFileName = "SandTestMap.txt";
-    //private static String mapFileName = "MovementTestMap.txt";	
-     private static String mapFileName = "Map100x60_2016-04-30_1.txt";
+    private static String mapFileName = "MovementTestMap.txt";	
     //private static String mapFileName = "convertedPaintMapToTextMap.txt";
 
     private static int mapWidth = 0;
