@@ -185,9 +185,9 @@ public class ROVER_02 extends Rover {
 					int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 					
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
-					communication.detectScience(scanMapTiles, currentLoc, centerIndex);
+					//communication.detectScience(scanMapTiles, currentLoc, centerIndex);
 					communication.displayAllDiscoveries();
-					detectCrystalScience(scanMapTiles);
+					communication.detectCrystalScience(scanMapTiles,currentLoc);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
@@ -326,35 +326,35 @@ public class ROVER_02 extends Rover {
 		}
 		//end check moving north	
 	
-		public void detectCrystalScience(MapTile[][] scanMapTiles) {       
-			
-			int centerIndex = (scanMap.getEdgeSize() - 1) / 2;	
-			int xPos = currentLoc.xpos - centerIndex;
-			int yPos = currentLoc.ypos - centerIndex;
-			
-			//This gives the current location 
-			System.out.println("X: "+xPos+" Y: "+yPos);
-			 
-			 int crystalXPosition, crystalYPosition;
-			 
-			 //Iterating through X coordinate
-			 for (int x = 0; x < scanMapTiles.length; x++){
-	           
-				//Iterating through Y coordinate
-				 for (int y = 0; y < scanMapTiles.length; y++){
-					//Checking for crystal Science and locating the crystal	         
-					 if (scanMapTiles[x][y].getScience() == Science.CRYSTAL) {
-	              
-						 crystalXPosition = xPos + x;
-						 crystalYPosition = yPos + y;
-			            
-	                   	Coord coord = new Coord(crystalXPosition ,crystalYPosition);//Coordination class constructor with two arguments
-			                System.out.println("Crystal position discovered:In "+scanMapTiles[x][y].getTerrain()+" at the position "+coord);
-			                crystalCoordinates.add(coord);
-	               }
-	           }
-		     }
-		 }
+//		public void detectCrystalScience(MapTile[][] scanMapTiles) {       
+//			
+//			int centerIndex = (scanMap.getEdgeSize() - 1) / 2;	
+//			int xPos = currentLoc.xpos - centerIndex;
+//			int yPos = currentLoc.ypos - centerIndex;
+//			
+//			//This gives the current location 
+//			System.out.println("X: "+ xPos +" Y: "+ yPos);
+//			 
+//			 int crystalXPosition, crystalYPosition;
+//			 
+//			 //Iterating through X coordinate
+//			 for (int x = 0; x < scanMapTiles.length; x++){
+//	           
+//				//Iterating through Y coordinate
+//				 for (int y = 0; y < scanMapTiles.length; y++){
+//					//Checking for crystal Science and locating the crystal	         
+//					 if (scanMapTiles[x][y].getScience() == Science.CRYSTAL) {
+//	              
+//						 crystalXPosition = xPos + x;
+//						 crystalYPosition = yPos + y;
+//			            
+//	                   	Coord coord = new Coord(crystalXPosition ,crystalYPosition);//Coordination class constructor with two arguments
+//			                System.out.println("Crystal position discovered:In "+ scanMapTiles[x][y].getTerrain() +" at the position "+coord);
+//			                crystalCoordinates.add(coord);
+//	               }
+//	           }
+//		     }
+//		 }
 		
 		
 		

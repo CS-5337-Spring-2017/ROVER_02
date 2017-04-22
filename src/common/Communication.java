@@ -43,6 +43,9 @@ public class Communication {
 
     /** Coordinates of all the Science discovered by this ROVER */
     private List<Coord> discoveredSciences = new ArrayList<Coord>();
+    
+    	/** Scan Crystal */
+  	List<Coord> crystalCoordinates = new ArrayList<Coord>();
 
     ParseStrings toString ;
     
@@ -74,31 +77,37 @@ public class Communication {
         return new_sciences;
     }
 
-    public List<Coord> detectScience(MapTile[][] map, Coord rover_coord, int sightRange) {
-      
-    	List<Coord> scienceCoords = new ArrayList<Coord>();
-    	Science scienceObj = null;
+    public void detectCrystalScience(MapTile[][] scanMapTiles, Coord currentLoc) {       
+		
+    	ScanMap scanMap = null;
     	
-        /* iterate through every MapTile Object in the 2D Array. If the MapTile
-         * contains science, calculate and save the coordinates of the tiles. */
-        for (int x = 0; x < map.length; x++) {
-            for (int y = 0; y < map[x].length; y++) {
-
-                MapTile mapTile = map[x][y];
-
-                System.out.println("map science: " + mapTile.getScience().getSciString() + " crystal: " + scienceObj.CRYSTAL.name());
-                if (mapTile.getScience().getSciString() == scienceObj.CRYSTAL.name()) {
-                	
-                    int tileX = rover_coord.xpos + (x - sightRange);
-                    int tileY = rover_coord.ypos + (y - sightRange);
-                    Coord eachCoord =  new Coord(tileX, tileY);
-                    updateDiscoveries(scienceCoords);
-                    scienceCoords.add(eachCoord);
-                }
-            }
-        }
-        return scienceCoords;
-    }
+		int centerIndex = (scanMap.getEdgeSize() - 1) / 2;	
+		int xPos = currentLoc.xpos - centerIndex;
+		int yPos = currentLoc.ypos - centerIndex;
+		
+		//This gives the current location 
+		System.out.println("X: "+ xPos +" Y: "+ yPos);
+		 
+		 int crystalXPosition, crystalYPosition;
+		 
+		 //Iterating through X coordinate
+		 for (int x = 0; x < scanMapTiles.length; x++){
+           
+			//Iterating through Y coordinate
+			 for (int y = 0; y < scanMapTiles.length; y++){
+				//Checking for crystal Science and locating the crystal	         
+				 if (scanMapTiles[x][y].getScience() == Science.CRYSTAL) {
+              
+					 crystalXPosition = xPos + x;
+					 crystalYPosition = yPos + y;
+		            
+                   	Coord coord = new Coord(crystalXPosition ,crystalYPosition);//Coordination class constructor with two arguments
+		                System.out.println("Crystal position discovered:In "+ scanMapTiles[x][y].getTerrain() +" at the position "+coord);
+		                crystalCoordinates.add(coord);
+               }
+           }
+	     }
+	 }
 
     
     
