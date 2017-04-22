@@ -185,6 +185,8 @@ public class ROVER_02 extends Rover {
 					int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 					
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
+					communication.detectScience(scanMapTiles, currentLoc, centerIndex);
+					communication.displayAllDiscoveries();
 					detectCrystalScience(scanMapTiles);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	

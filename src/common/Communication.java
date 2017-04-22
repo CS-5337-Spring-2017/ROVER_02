@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import enums.Science;
 import testUtillities.ParseStrings;
 
 
@@ -46,9 +47,9 @@ public class Communication {
     ParseStrings toString ;
     
     public void displayAllDiscoveries() {
-        System.out.println(rovername + " SCIENCE-DISCOVERED-BY-ME: "
+        System.out.println(rovername + " SCIENCE-DISCOVERED: "
                 + toProtocolString(discoveredSciences));
-        System.out.println(rovername + " TOTAL-NUMBER-OF-SCIENCE-DISCOVERED-BY-ME: "
+        System.out.println(rovername + " TOTAL-NUMBER-OF-SCIENCE-DISCOVERED: "
                 + discoveredSciences.size());
     }
     
@@ -62,7 +63,8 @@ public class Communication {
     }
     
     public List<Coord> updateDiscoveries(List<Coord> detectedSciences) {
-        List<Coord> new_sciences = new ArrayList<Coord>();
+       
+    	List<Coord> new_sciences = new ArrayList<Coord>();
         for (Coord c : detectedSciences) {
             if (!discoveredSciences.contains(c)) {
                 discoveredSciences.add(c);
@@ -70,6 +72,29 @@ public class Communication {
             }
         }
         return new_sciences;
+    }
+
+    public List<Coord> detectScience(MapTile[][] map, Coord rover_coord, int sightRange) {
+      
+    	List<Coord> scienceCoords = new ArrayList<Coord>();
+    	Science scienceObj = null;
+    	
+        /* iterate through every MapTile Object in the 2D Array. If the MapTile
+         * contains science, calculate and save the coordinates of the tiles. */
+        for (int x = 0; x < map.length; x++) {
+            for (int y = 0; y < map[x].length; y++) {
+
+                MapTile mapTile = map[x][y];
+
+                if (mapTile.getScience() == scienceObj.CRYSTAL) {
+                    int tileX = rover_coord.xpos + (x - sightRange);
+                    int tileY = rover_coord.ypos + (y - sightRange);
+                    Coord eachCoord =  new Coord(tileX, tileY);
+                    scienceCoords.add(eachCoord);
+                }
+            }
+        }
+        return scienceCoords;
     }
 
     
