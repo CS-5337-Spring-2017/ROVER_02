@@ -86,10 +86,13 @@ public class Communication {
 
                 MapTile mapTile = map[x][y];
 
-                if (mapTile.getScience() == scienceObj.CRYSTAL) {
+                System.out.println("map science: " + mapTile.getScience().getSciString() + " crystal: " + scienceObj.CRYSTAL.name());
+                if (mapTile.getScience().getSciString() == scienceObj.CRYSTAL.name()) {
+                	
                     int tileX = rover_coord.xpos + (x - sightRange);
                     int tileY = rover_coord.ypos + (y - sightRange);
                     Coord eachCoord =  new Coord(tileX, tileY);
+                    updateDiscoveries(scienceCoords);
                     scienceCoords.add(eachCoord);
                 }
             }
