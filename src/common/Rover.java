@@ -181,6 +181,11 @@ public class Rover {
 		return gson.fromJson(jsonScanMapString, ScanMap.class);
 	}
 	
+	//adding method for gathering science
+	protected void gatherScience(){
+        sendTo_RCP.println("GATHER");
+    }
+	
 
 	// this takes the server response string, parses out the x and y values and
 	// returns a Coord object	
