@@ -1,10 +1,5 @@
 package common;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,6 +8,25 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import testUtillities.ParseStrings;
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Created by samskim on 5/12/16.
@@ -26,6 +40,40 @@ public class Communication {
     private String rovername;
     private String corp_secret;
 
+    /** Coordinates of all the Science discovered by this ROVER */
+    private List<Coord> discoveredSciences = new ArrayList<Coord>();
+
+    ParseStrings toString ;
+    
+    public void displayAllDiscoveries() {
+        System.out.println(rovername + " SCIENCE-DISCOVERED-BY-ME: "
+                + toProtocolString(discoveredSciences));
+        System.out.println(rovername + " TOTAL-NUMBER-OF-SCIENCE-DISCOVERED-BY-ME: "
+                + discoveredSciences.size());
+    }
+    
+    private String toProtocolString(List<Coord> coords) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = coords.size() - 1; i >= 0; i--) {
+            sb.append(coords.get(i).toString() + " ");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+    
+    public List<Coord> updateDiscoveries(List<Coord> detectedSciences) {
+        List<Coord> new_sciences = new ArrayList<Coord>();
+        for (Coord c : detectedSciences) {
+            if (!discoveredSciences.contains(c)) {
+                discoveredSciences.add(c);
+                new_sciences.add(c);
+            }
+        }
+        return new_sciences;
+    }
+
+    
+    
     public Communication(String url, String rovername, String corp_secret) {
         this.url = url;
         this.parser = new JSONParser();
@@ -181,7 +229,8 @@ public class Communication {
             con.setRequestProperty("Rover-Name", rovername);
             con.setRequestProperty("Corp-Secret", corp_secret);
             con.setRequestProperty("Content-Type", "application/json");
-
+            
+            
             int responseCode = con.getResponseCode();
             System.out.println("\nSending 'POST' request to URL : " + url);
             System.out.println("Response Code : " + responseCode);
@@ -208,4 +257,11 @@ public class Communication {
         return "";
     }
 
+    
+    
+
+    
+    
+    
+    
 }

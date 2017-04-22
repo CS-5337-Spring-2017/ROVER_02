@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import common.Communication;
+import common.Coord;
 import common.MapTile;
 import common.Rover;
+import enums.Science;
 import enums.Terrain;
+
 
 /**
  * The seed that this program is built on is a chat program example found here:
@@ -19,6 +24,9 @@ import enums.Terrain;
 
 public class ROVER_02 extends Rover {
 
+	
+		//Scan Crystal 
+		List<Coord> crystalCoordinates = new ArrayList<Coord>();
 
 	public ROVER_02() {
 		// constructor
@@ -127,6 +135,11 @@ public class ROVER_02 extends Rover {
 				// prints the scanMap to the Console output for debug purposes
 				scanMap.debugPrintMap();
 				
+				
+			
+				
+				
+				
 		
 							
 				// ***** get TIMER time remaining *****
@@ -172,7 +185,7 @@ public class ROVER_02 extends Rover {
 					int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 					
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
-					
+					detectCrystalScience(scanMapTiles);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
@@ -310,7 +323,41 @@ public class ROVER_02 extends Rover {
 			}
 		}
 		//end check moving north	
-
+	
+		public void detectCrystalScience(MapTile[][] scanMapTiles) {       
+			
+			int centerIndex = (scanMap.getEdgeSize() - 1) / 2;	
+			int xPos = currentLoc.xpos - centerIndex;
+			int yPos = currentLoc.ypos - centerIndex;
+			
+			//This gives the current location 
+			System.out.println("X: "+xPos+" Y: "+yPos);
+			 
+			 int crystalXPosition, crystalYPosition;
+			 
+			 //Iterating through X coordinate
+			 for (int x = 0; x < scanMapTiles.length; x++){
+	           
+				//Iterating through Y coordinate
+				 for (int y = 0; y < scanMapTiles.length; y++){
+					//Checking for crystal Science and locating the crystal	         
+					 if (scanMapTiles[x][y].getScience() == Science.CRYSTAL) {
+	              
+						 crystalXPosition = xPos + x;
+						 crystalYPosition = yPos + y;
+			            
+	                   	Coord coord = new Coord(crystalXPosition ,crystalYPosition);//Coordination class constructor with two arguments
+			                System.out.println("Crystal position discovered:In "+scanMapTiles[x][y].getTerrain()+" at the position "+coord);
+			                crystalCoordinates.add(coord);
+	               }
+	           }
+		     }
+		 }
+		
+		
+		
+		
+		
 	//method for the JSON object
 		public static void sendJSON(){
 			
