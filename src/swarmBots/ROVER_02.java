@@ -187,7 +187,7 @@ public class ROVER_02 extends Rover {
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
 					//communication.detectScience(scanMapTiles, currentLoc, centerIndex);
 					communication.displayAllDiscoveries();
-					communication.detectCrystalScience(scanMapTiles,currentLoc);
+					communication.detectScience(scanMapTiles, currentLoc, centerIndex);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
