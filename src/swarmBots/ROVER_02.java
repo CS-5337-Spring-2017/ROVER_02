@@ -12,7 +12,6 @@ import common.Communication;
 import common.Coord;
 import common.MapTile;
 import common.Rover;
-import enums.Science;
 import enums.Terrain;
 
 
@@ -104,13 +103,13 @@ public class ROVER_02 extends Rover {
 			
 			
 			// **** Request START_LOC Location from SwarmServer **** this might be dropped as it should be (0, 0)
-			StartLocation = getStartLocation();
-			System.out.println(rovername + " START_LOC " + StartLocation);
+			startLocation = getStartLocation();
+			System.out.println(rovername + " START_LOC " + startLocation);
 			
 			
 			// **** Request TARGET_LOC Location from SwarmServer ****
-			TargetLocation = getTargetLocation();
-			System.out.println(rovername + " TARGET_LOC " + TargetLocation);
+			targetLocation = getTargetLocation();
+			System.out.println(rovername + " TARGET_LOC " + targetLocation);
 			
 			
 	
@@ -186,8 +185,8 @@ public class ROVER_02 extends Rover {
 					
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
 					//communication.detectScience(scanMapTiles, currentLoc, centerIndex);
-					communication.displayAllDiscoveries();
-					communication.detectCrystalScience(scanMapTiles,currentLoc);
+					//communication.displayAllDiscoveries();
+					//communication.detectCrystalScience(scanMapTiles,currentLoc);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
