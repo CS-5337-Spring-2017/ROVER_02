@@ -16,7 +16,7 @@ public enum RoverConfiguration {
 	NONE,
 
 	ROVER_01 ("WHEELS", "EXCAVATOR", "CHEMICAL_SENSOR"),
-	ROVER_02 ("WALKER", "RANGE_BOOTER", "DRILL"),
+	ROVER_02 ("WALKER", "SPECTRAL_SENSOR", "DRILL"), //spectral sensor for rover02, instead of range_extender
 	ROVER_03 ("TREADS", "EXCAVATOR", "RADAR_SENSOR"),
 
 	//not currently being used

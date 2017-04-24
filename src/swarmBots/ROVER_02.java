@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import common.Communication;
+import common.Coord;
 import common.MapTile;
 import common.Rover;
 import enums.Terrain;
+
 
 /**
  * The seed that this program is built on is a chat program example found here:
@@ -19,6 +23,9 @@ import enums.Terrain;
 
 public class ROVER_02 extends Rover {
 
+	
+		//Scan Crystal 
+		List<Coord> crystalCoordinates = new ArrayList<Coord>();
 
 	public ROVER_02() {
 		// constructor
@@ -54,6 +61,8 @@ public class ROVER_02 extends Rover {
 			
 			// Initialize communication server connection to send map updates
 			Communication communication = new Communication("http://localhost:3000/api", rovername, "open_secret");
+			
+			
 
 			while (true) {
 				String line = receiveFrom_RCP.readLine();
@@ -63,7 +72,6 @@ public class ROVER_02 extends Rover {
 					break;
 				}
 			}
-	
 	
 			
 			/**
@@ -95,13 +103,13 @@ public class ROVER_02 extends Rover {
 			
 			
 			// **** Request START_LOC Location from SwarmServer **** this might be dropped as it should be (0, 0)
-			StartLocation = getStartLocation();
-			System.out.println(rovername + " START_LOC " + StartLocation);
+			startLocation = getStartLocation();
+			System.out.println(rovername + " START_LOC " + startLocation);
 			
 			
 			// **** Request TARGET_LOC Location from SwarmServer ****
-			TargetLocation = getTargetLocation();
-			System.out.println(rovername + " TARGET_LOC " + TargetLocation);
+			targetLocation = getTargetLocation();
+			System.out.println(rovername + " TARGET_LOC " + targetLocation);
 			
 			
 	
@@ -126,6 +134,11 @@ public class ROVER_02 extends Rover {
 				// prints the scanMap to the Console output for debug purposes
 				scanMap.debugPrintMap();
 				
+				
+			
+				
+				
+				
 		
 							
 				// ***** get TIMER time remaining *****
@@ -137,12 +150,24 @@ public class ROVER_02 extends Rover {
 				
 				if (blocked) {
 					if(stepCount > 0){
-						if(southBlocked()){	
+						if(southBlocked() == true && westBlocked() == false){
+							//System.out.println("-----HELP ME I AM BLOCKED FROM SOUTH!!-----");
+							moveWest();
+							stepCount -=1;
+						}
+						else if(southBlocked() == true && westBlocked() == true){
+							//System.out.println("-----HELP ME I AM BLOCKED FROM SOUTH!!-----");
 							moveEast();
+							stepCount -=1;
+						}
+						else if(southBlocked() == true && eastBlocked() == true){
+							//System.out.println("-----HELP ME I AM BLOCKED FROM SOUTH!!-----");
+							moveWest();
 							stepCount -=1;
 						}
 						else{
 							moveSouth();
+							
 							stepCount -=1;
 						}
 					}
@@ -159,6 +184,9 @@ public class ROVER_02 extends Rover {
 					int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 					
 					communication.postScanMapTiles(currentLoc, scanMapTiles);
+					//communication.detectScience(scanMapTiles, currentLoc, centerIndex);
+					//communication.displayAllDiscoveries();
+					//communication.detectCrystalScience(scanMapTiles,currentLoc);
 					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 	
 					if (goingWest) {
@@ -181,7 +209,7 @@ public class ROVER_02 extends Rover {
 						if (scanMapTiles[centerIndex +1][centerIndex].getHasRover() 
 								|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.SAND
 								|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.NONE) {
-							
+							System.out.println(">>>>>>>EAST BLOCKED<<<<<<<<");
 							blocked = true;
 							stepCount = 5;  //side stepping
 							} else {
@@ -194,21 +222,11 @@ public class ROVER_02 extends Rover {
 	
 				// another call for current location
 				currentLoc = getCurrentLocation();
-
+				
+				
 	
 				// test for stuckness
 				stuck = currentLoc.equals(previousLoc);	
-				
-				
-				// Naif, My idea is to get the (x,y) of the rover when stuck and then move one step back and find alternative paths. 
-//				if(stuck){
-//					
-//				int x = getCurrentLocation().xpos;
-//				int y = getCurrentLocation().ypos;
-//				
-//					
-//				}
-				
 				
 				// this is the Rovers HeartBeat, it regulates how fast the Rover cycles through the control loop
 				Thread.sleep(sleepTime);
@@ -239,11 +257,11 @@ public class ROVER_02 extends Rover {
 		// pull the MapTile array out of the ScanMap object
 		MapTile[][] scanMapTiles = scanMap.getScanMap();
 		int centerIndex = (scanMap.getEdgeSize() - 1)/2;
-		
-		if (scanMapTiles[centerIndex -1][centerIndex].getHasRover() 
-				|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
-				|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.NONE) {
-		
+		// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+		if (scanMapTiles[centerIndex][centerIndex+1].getHasRover() 
+				|| scanMapTiles[centerIndex][centerIndex+1].getTerrain() == Terrain.SAND
+				|| scanMapTiles[centerIndex][centerIndex+1].getTerrain() == Terrain.NONE) {
+			System.out.println(">>>>>>>SOUTH BLOCKED<<<<<<<<");
 			return true;
 		} else {
 			// request to server to move
@@ -251,8 +269,101 @@ public class ROVER_02 extends Rover {
 		}
 	}
 	//end check moving south
-
 	
+	//checking if moving east is allowed
+		public boolean eastBlocked(){
+			// pull the MapTile array out of the ScanMap object
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+			if (scanMapTiles[centerIndex+1][centerIndex].getHasRover() 
+					|| scanMapTiles[centerIndex+1][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex+1][centerIndex].getTerrain() == Terrain.NONE) {
+					System.out.println(">>>>>>>EAST BLOCKED<<<<<<<<");
+				return true;
+			} else {
+				// request to server to move
+				return false;
+			}
+		}
+		//end check moving east
+		
+		//checking if moving west is allowed
+		public boolean westBlocked(){
+			// pull the MapTile array out of the ScanMap object
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+			if (scanMapTiles[centerIndex-1][centerIndex].getHasRover() 
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.NONE) {
+					System.out.println(">>>>>>>WEST BLOCKED<<<<<<<<");
+				return true;
+			} else {
+				// request to server to move
+				return false;
+			}
+		}
+		//end check moving west	
+		
+		
+		//checking if moving north is allowed
+		public boolean northBlocked(){
+			// pull the MapTile array out of the ScanMap object
+			MapTile[][] scanMapTiles = scanMap.getScanMap();
+			int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+			// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
+			if (scanMapTiles[centerIndex-1][centerIndex].getHasRover() 
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.SAND
+					|| scanMapTiles[centerIndex-1][centerIndex].getTerrain() == Terrain.NONE) {
+					System.out.println(">>>>>>>NORTH BLOCKED<<<<<<<<");
+				return true;
+			} else {
+				// request to server to move
+				return false;
+			}
+		}
+		//end check moving north	
+	
+//		public void detectCrystalScience(MapTile[][] scanMapTiles) {       
+//			
+//			int centerIndex = (scanMap.getEdgeSize() - 1) / 2;	
+//			int xPos = currentLoc.xpos - centerIndex;
+//			int yPos = currentLoc.ypos - centerIndex;
+//			
+//			//This gives the current location 
+//			System.out.println("X: "+ xPos +" Y: "+ yPos);
+//			 
+//			 int crystalXPosition, crystalYPosition;
+//			 
+//			 //Iterating through X coordinate
+//			 for (int x = 0; x < scanMapTiles.length; x++){
+//	           
+//				//Iterating through Y coordinate
+//				 for (int y = 0; y < scanMapTiles.length; y++){
+//					//Checking for crystal Science and locating the crystal	         
+//					 if (scanMapTiles[x][y].getScience() == Science.CRYSTAL) {
+//	              
+//						 crystalXPosition = xPos + x;
+//						 crystalYPosition = yPos + y;
+//			            
+//	                   	Coord coord = new Coord(crystalXPosition ,crystalYPosition);//Coordination class constructor with two arguments
+//			                System.out.println("Crystal position discovered:In "+ scanMapTiles[x][y].getTerrain() +" at the position "+coord);
+//			                crystalCoordinates.add(coord);
+//	               }
+//	           }
+//		     }
+//		 }
+		
+		
+		
+		
+		
+	//method for the JSON object
+		public static void sendJSON(){
+			
+		}
+	//end JSON method
 
 
 	/**
