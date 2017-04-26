@@ -13,9 +13,8 @@ import common.MapTile;
 import common.Rover;
 import common.RoverDetail;
 import common.ScienceDetail;
-import common.AStar;
-import enums.Terrain;
-import swarmBots.ROVER_03.MoveTargetLocation;
+import rover_logic.Astar;
+import enums.*;
 
 
 /**
@@ -140,71 +139,65 @@ public class ROVER_02 extends Rover {
 				int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 				
 				// ***** MOVING *****
-				MoveTargetLocation moveTargetLocation = null;
 				RoverDetail roverDetail = new RoverDetail();
 				ScienceDetail scienceDetail = analyzeAndGetSuitableScience();
-				int startXpos;
-				int startYpos;
-				int endXpos;
-				int endYpos;
-
-			    int blockedCell [][] = null;
+				Coord scienceCoordinates= new Coord(scienceDetail.getX(), scienceDetail.getY());
 				if (scienceDetail != null) {
-					startXpos=getCurrentLocation().xpos;
-					startYpos=getCurrentLocation().ypos;
 					//check if already in science location, if yes, gather science. 
-					if(scienceDetail.getX()==startXpos && scienceDetail.getY()==startYpos && scienceDetail.getScience().getSciString().equals("SOIL"))
+					if(scienceDetail.getX()==currentLoc.xpos && scienceDetail.getY()==currentLoc.ypos && (scienceDetail.getScience().getSciString().equals("SOIL") || scienceDetail.getScience().getSciString().equals("CRYSTAL")))
 					{
 						scienceDetail.getScience();
 					}
 					//if not in same location, run A* algorithm. 
 					else{
-							endXpos = scienceDetail.getX();
-							endYpos = scienceDetail.getY();
-							
-						//blocked neighbors added to array.	
-						if(startXpos-1>0){
-							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
-							if(scanMapTiles[startXpos-1][startYpos].getHasRover() 
-									|| scanMapTiles[startXpos-1][startYpos].getTerrain() == Terrain.SAND
-									|| scanMapTiles[startXpos-1][startYpos].getTerrain() == Terrain.NONE){
-								blockedCell[startXpos-1][startYpos]=-1;
-								break;
-							}
-						}
-						if(startXpos+1<scanMap.getEdgeSize()){
-							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
-							if(scanMapTiles[startXpos+1][startYpos].getHasRover() 
-									|| scanMapTiles[startXpos+1][startYpos].getTerrain() == Terrain.SAND
-									|| scanMapTiles[startXpos+1][startYpos].getTerrain() == Terrain.NONE){
-								blockedCell[startXpos+1][startYpos]=-1;
-								break;
-							}
-							
-						}
-						if(startYpos-1>0){
-							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
-							if(scanMapTiles[startXpos][startYpos-1].getHasRover() 
-									|| scanMapTiles[startXpos][startYpos-1].getTerrain() == Terrain.SAND
-									|| scanMapTiles[startXpos][startYpos-1].getTerrain() == Terrain.NONE){
-								blockedCell[startXpos][startYpos-1]=-1;
-								break;
-							}
-
-						}
-						if(startYpos+1<scanMap.getEdgeSize()){
-							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
-							if(scanMapTiles[startXpos][startYpos+1].getHasRover() 
-									|| scanMapTiles[startXpos][startYpos+1].getTerrain() == Terrain.SAND
-									|| scanMapTiles[startXpos][startYpos+1].getTerrain() == Terrain.NONE){
-								blockedCell[startXpos][startYpos+1]=-1;
-								break;
-							}
-							
-						}//End of code that tracks blocked cells.
+							//create a 3D array containing coordinates and ??? Richard: what does the 3rd D represent?
+							Astar aStar = new Astar(1000, 1000, currentLoc, scienceCoordinates);
+							RoverToolType tool1 = roverDetail.getToolType1();
+							RoverToolType tool2 = roverDetail.getToolType2();
+							aStar.addScanMap(scanMap, currentLoc,tool1,tool2);
+//						//blocked neighbors added to array.	
+//						if(startXpos-1>0){
+//							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
+//							if(scanMapTiles[startXpos-1][startYpos].getHasRover() 
+//									|| scanMapTiles[startXpos-1][startYpos].getTerrain() == Terrain.SAND
+//									|| scanMapTiles[startXpos-1][startYpos].getTerrain() == Terrain.NONE){
+//								blockedCell[startXpos-1][startYpos]=-1;
+//								break;
+//							}
+//						}
+//						if(startXpos+1<scanMap.getEdgeSize()){
+//							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
+//							if(scanMapTiles[startXpos+1][startYpos].getHasRover() 
+//									|| scanMapTiles[startXpos+1][startYpos].getTerrain() == Terrain.SAND
+//									|| scanMapTiles[startXpos+1][startYpos].getTerrain() == Terrain.NONE){
+//								blockedCell[startXpos+1][startYpos]=-1;
+//								break;
+//							}
+//							
+//						}
+//						if(startYpos-1>0){
+//							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
+//							if(scanMapTiles[startXpos][startYpos-1].getHasRover() 
+//									|| scanMapTiles[startXpos][startYpos-1].getTerrain() == Terrain.SAND
+//									|| scanMapTiles[startXpos][startYpos-1].getTerrain() == Terrain.NONE){
+//								blockedCell[startXpos][startYpos-1]=-1;
+//								break;
+//							}
+//
+//						}
+//						if(startYpos+1<scanMap.getEdgeSize()){
+//							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
+//							if(scanMapTiles[startXpos][startYpos+1].getHasRover() 
+//									|| scanMapTiles[startXpos][startYpos+1].getTerrain() == Terrain.SAND
+//									|| scanMapTiles[startXpos][startYpos+1].getTerrain() == Terrain.NONE){
+//								blockedCell[startXpos][startYpos+1]=-1;
+//								break;
+//							}
+//							
+//						}//End of code that tracks blocked cells.
 						
 						//A* 
-						Astar.test(123, scanMap.getEdgeSize(), scanMap.getEdgeSize(), getCurrentLocation().xpos, getCurrentLocation().ypos, scienceDetail.getX(), scienceDetail.getY(), blockedCell);
+						//Astar.test(123, scanMap.getEdgeSize(), scanMap.getEdgeSize(), getCurrentLocation().xpos, getCurrentLocation().ypos, scienceDetail.getX(), scienceDetail.getY(), blockedCell);
 
 					}
 					
