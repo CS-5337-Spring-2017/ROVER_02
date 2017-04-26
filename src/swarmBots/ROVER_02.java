@@ -12,6 +12,8 @@ import common.Communication;
 import common.Coord;
 import common.MapTile;
 import common.Rover;
+import common.RoverDetail;
+import common.ScienceDetail;
 import enums.Terrain;
 
 
@@ -148,6 +150,10 @@ public class ROVER_02 extends Rover {
 				
 				// ***** MOVING *****
 				
+				//adding RoverDetail and ScienceDetail as per the unified Comm server
+				RoverDetail roverDetail = new RoverDetail();
+				ScienceDetail scienceDetail = analyzeAndGetSuitableScience();
+
 				if (blocked) {
 					if(stepCount > 0){
 						if(southBlocked() == true && westBlocked() == false){
@@ -199,6 +205,11 @@ public class ROVER_02 extends Rover {
 							stepCount = 5;  //side stepping
 						} else {
 							// request to server to move
+							//check for science
+							System.out.println("####### Science detail: "+scienceDetail+" ############");
+							if (scienceDetail != null) {
+
+								System.out.println("FOUND SCIENCE TO GATHER: " + scienceDetail);}
 							moveWest();
 						}
 						
