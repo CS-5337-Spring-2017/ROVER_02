@@ -14,7 +14,8 @@ import common.Rover;
 import common.RoverDetail;
 import common.ScienceDetail;
 import rover_logic.Astar;
-import enums.*;
+import enums.RoverToolType;
+import enums.Terrain;
 
 
 /**
@@ -141,8 +142,8 @@ public class ROVER_02 extends Rover {
 				// ***** MOVING *****
 				RoverDetail roverDetail = new RoverDetail();
 				ScienceDetail scienceDetail = analyzeAndGetSuitableScience();
-				Coord scienceCoordinates= new Coord(scienceDetail.getX(), scienceDetail.getY());
 				if (scienceDetail != null) {
+					Coord scienceCoordinates= new Coord(scienceDetail.getX(), scienceDetail.getY());
 					//check if already in science location, if yes, gather science. 
 					if(scienceDetail.getX()==currentLoc.xpos && scienceDetail.getY()==currentLoc.ypos && (scienceDetail.getScience().getSciString().equals("SOIL") || scienceDetail.getScience().getSciString().equals("CRYSTAL")))
 					{
@@ -151,10 +152,12 @@ public class ROVER_02 extends Rover {
 					//if not in same location, run A* algorithm. 
 					else{
 							//create a 3D array containing coordinates and ??? Richard: what does the 3rd D represent?
-							Astar aStar = new Astar(1000, 1000, currentLoc, scienceCoordinates);
+							//Astar aStar = new Astar(1000, 1000, currentLoc, scienceCoordinates);
 							RoverToolType tool1 = roverDetail.getToolType1();
 							RoverToolType tool2 = roverDetail.getToolType2();
-							aStar.addScanMap(scanMap, currentLoc,tool1,tool2);
+							scanMap.debugPrintMap();
+							//aStar.addScanMap(scanMap, currentLoc,tool1,tool2);
+							scanMap.debugPrintMap();
 //						//blocked neighbors added to array.	
 //						if(startXpos-1>0){
 //							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
