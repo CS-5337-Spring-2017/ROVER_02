@@ -15,6 +15,7 @@ import common.RoverDetail;
 import common.ScienceDetail;
 import rover_logic.Astar;
 import enums.RoverToolType;
+import enums.RoverDriveType;
 import enums.Terrain;
 
 
@@ -93,7 +94,9 @@ public class ROVER_02 extends Rover {
 			cardinals[1] = "E";
 			cardinals[2] = "S";
 			cardinals[3] = "W";	
-			String currentDir = cardinals[2];		
+			String currentDir = cardinals[2];	
+			boolean targetReached =true;
+			char aStarBlocked;
 			
 			/**
 			 *  ### Retrieve static values from RCP ###
@@ -148,6 +151,7 @@ public class ROVER_02 extends Rover {
 					if(scienceDetail.getX()==currentLoc.xpos && scienceDetail.getY()==currentLoc.ypos && (scienceDetail.getScience().getSciString().equals("SOIL") || scienceDetail.getScience().getSciString().equals("CRYSTAL")))
 					{
 						scienceDetail.getScience();
+						System.out.println("Science gathered.");
 					}
 					//if not in same location, run A* algorithm. 
 					else{
@@ -156,9 +160,26 @@ public class ROVER_02 extends Rover {
 							Astar aStar = new Astar(1000, 1000, currentLoc, scienceCoordinates);
 							RoverToolType tool1 = roverDetail.getToolType1();
 							RoverToolType tool2 = roverDetail.getToolType2();
+							RoverDriveType drivetype = roverDetail.getDriveType();
 							scanMap.debugPrintMap();
 							aStar.addScanMap(scanMap, currentLoc,tool1,tool2);
 							scanMap.debugPrintMap();
+							
+							//while target is not reached.... 
+							while(!targetReached)
+							{
+								//keep checking and moving.
+								currentLoc =getCurrentLocation();
+								aStarBlocked=aStar.findPath(currentLoc, scienceCoordinates, drivetype);
+								if (aStarBlocked== 'u')
+								{
+									
+								}
+								if(currentLoc.equals(targetLocation)){
+									targetReached=true;
+								}
+							}
+							
 //						//blocked neighbors added to array.	
 //						if(startXpos-1>0){
 //							//check if neighbor blocked; if blocked, skip, move onto next neighbor.
