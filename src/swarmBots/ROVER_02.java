@@ -82,8 +82,6 @@ public class ROVER_02 extends Rover {
 			int stepCount = 0;	
 			String line = "";	
 			boolean goingWest = false;
-			
-			
 			boolean stuck = false; // just means it did not change locations between requests,
 									// could be velocity limit or obstruction etc.
 			
@@ -96,7 +94,7 @@ public class ROVER_02 extends Rover {
 			cardinals[3] = "W";	
 			String currentDir = cardinals[2];	
 			boolean targetReached =true;
-			char aStarBlocked;
+			char aStarDir;
 			
 			/**
 			 *  ### Retrieve static values from RCP ###
@@ -144,6 +142,7 @@ public class ROVER_02 extends Rover {
 				
 				// ***** MOVING *****
 				RoverDetail roverDetail = new RoverDetail();
+				System.out.println(roverDetail.toString());
 				ScienceDetail scienceDetail = analyzeAndGetSuitableScience();
 				if (scienceDetail != null) {
 					Coord scienceCoordinates= new Coord(scienceDetail.getX(), scienceDetail.getY());
@@ -170,10 +169,40 @@ public class ROVER_02 extends Rover {
 							{
 								//keep checking and moving.
 								currentLoc =getCurrentLocation();
-								aStarBlocked=aStar.findPath(currentLoc, scienceCoordinates, drivetype);
-								if (aStarBlocked== 'u')
+								aStarDir=aStar.findPath(currentLoc, scienceCoordinates, drivetype);
+								
+								//if North
+								if (aStarDir== 'N')
 								{
-									
+									System.out.println("Going North");
+								}
+								
+								//if South
+								if (aStarDir== 'S')
+								{
+									System.out.println("Going South");
+
+								}
+								
+								//if East
+								if (aStarDir== 'E')
+								{
+									System.out.println("Going East");
+
+								}
+								
+								//if West
+								if (aStarDir== 'W')
+								{
+									System.out.println("Going West");
+
+								}
+								
+								//if unreachable, u
+								if (aStarDir== 'u')
+								{
+									System.out.println("Target Location Unreachable");
+
 								}
 								if(currentLoc.equals(targetLocation)){
 									targetReached=true;
