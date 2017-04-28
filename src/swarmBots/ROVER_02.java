@@ -192,6 +192,7 @@ public class ROVER_02 extends Rover {
 										scienceDetail.getY() ),
 								driveType );
 						System.out.println("from astar dirChar is: "+dirChar);
+						//deciding direction based on the response from astar
 						if(dirChar == 'S'){
 							System.out.println("moving South, because I'm directed to go: "+dirChar);
 							moveSouth();
