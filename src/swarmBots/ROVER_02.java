@@ -16,6 +16,7 @@ import common.RoverDetail;
 import common.ScienceDetail;
 import enums.RoverConfiguration;
 import enums.RoverDriveType;
+import enums.RoverMode;
 import enums.RoverToolType;
 import enums.Terrain;
 import rover_logic.Astar;
@@ -209,12 +210,27 @@ public class ROVER_02 extends Rover {
 							System.out.println("moving North, because I'm directed to go: "+dirChar);
 							moveNorth();
 						}
+						
+						//setting gather mode
+						roverDetail.setRoverMode( RoverMode.GATHER );
+
+                        System.out.println(
+                            "=====> In gather mode using Astar in the direction "
+                                + dirChar );
 					}
 
 				} // end primary addition of science/harvest
 
 				//following else portion is for when scienceDetail is not found, this is our default movement
 				else{ //START TEST 
+					
+					//setting explore mode
+//					System.out
+//                    .println( "*****> In explore mode in the direction "
+//                        + moveTargetLocation.d );
+
+                roverDetail.setRoverMode( RoverMode.EXPLORE );
+					
 					if (blocked) {
 						if(stepCount > 0){
 							if(southBlocked() == true && westBlocked() == false){
