@@ -60,7 +60,22 @@ The movement of the rover is indicated by four letters as East, West, North, Sou
 
   All these commands and communication is inside the while loop which makes the rover keep going unless the rover is stuck somewhere.
 
-The `ScanMap.java` is the main controller responsible for scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position and as it moves it takes it stores details of the coordinate in a scanArray which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array this helps to create the map which can be used to track the information but the communication server as well other rovers.
+The `ScanMap.java` is the main controller responsible for scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position.
+
+```
+public ScanMap(){
+  this.scanArray = null;
+  this.edgeSize = 0;
+  this.centerPoint = null;		
+}
+
+public ScanMap(MapTile[][] scanArray, int size, Coord centerPoint){
+  this.scanArray = scanArray;
+  this.edgeSize = size;
+  this.centerPoint = centerPoint;		
+}
+```
+As it moves it stores details of the coordinate in a `scanArray` which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array. This helps to create the map which can be used to share the information with the communication server as well other rovers.
 
 **3.What are the communication commands?**
 
