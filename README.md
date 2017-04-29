@@ -77,7 +77,7 @@ public ScanMap(MapTile[][] scanArray, int size, Coord centerPoint){
 ```
 As it moves it stores details of the coordinate in a `scanArray` which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array.
 
-![scanMap](URL for scanMap screenshot)
+![scanMap](http://i.imgur.com/un23bl6.png)
 
 This helps to create the map which can be used to share the information with the communication server as well other rovers.
 
@@ -99,7 +99,7 @@ roverDetailMsg.put("y", roverDetail.getY());
 
 In order to communicate with the server, several request headers are added. This depends on the API call that's being made. For example, in order to send a `GET` request to the URL `/science/all`, the following request headers are added:
 ```
-        con.setRequestMethod("GET");
+      con.setRequestMethod("GET");
 		con.setRequestProperty("Rover-Name", rovername);
 		con.setRequestProperty("Content-Type", "application/json");
 		con.setRequestProperty("Accept", "application/json");
@@ -115,12 +115,61 @@ pending
 **5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other? Also, what are some approaches to
 not getting the rovers stuck in a corner?**
 
-From doc
+Currently, with each step, the rover is trying to find if it’s the closest one to a science, using A-Star:
+
+    char dirChar = aStar.findPath( getCurrentLocation(),
+          new Coord( scienceDetail.getX(),
+          scienceDetail.getY() ),
+          driveType );
+
+If it is, it travels to that science and prints out the following pair of messages that have the detail for the science as well as the location.
+
+    if(scienceDetail.getX() == getCurrentLocation().xpos
+          && scienceDetail.getY() == getCurrentLocation().ypos ) {
+        gatherScience( getCurrentLocation() );
+        System.out.println( "$$$$$> Gathered science "
+            + scienceDetail.getScience() + " at location "
+            + getCurrentLocation() );
+      }
+
+On the other hand, while a rover is locating a piece of science, if it finds that another rover is closer to the science, the current rover switches to the default explore mode and lets the other rover harvest that science.
+
+ ```roverDetail.setRoverMode( RoverMode.EXPLORE );```
+
 
 **6.What equipment is available to a rover and how is it configured?**
 
-From doc
+pending
 
-**7.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
+**7.Describe the different drive and tool types, how they are used and how they interact with the
+environment. Go into some of the design considerations for choosing different equipment
+configurations for small (5) medium (6-10) and large (10+) groups of rovers. How should tools
+and drive types be mixed?**
+
+The different types of drive and tool types are:
+
+* The wheels which can travel on soil and gravel but not on rock and sand
+
+* The walkers are the slowest of all the three types of the drive tools. The main advantage is that they can walk over all except sand.
+
+* The treads are similar to walkers but are little faster when compared with the walkers. The main purpose of these treads are that they are used to run over sand.
+
+Next comes the extraction tools, there are two types of extraction tools:  
+
+* Drills
+* Excavators
+
+These are used in rock and gravel, soil and sand respectively. Another important tool is the scanner tools, the scanning tools are:
+
+* Radiation Sensor(Scans radioactive material)
+* Chemical Sensor(Scans organic material)
+* Spectral Sensor(Scans crystal science material)
+* Radar Sensor(Scans mineral science material)
+
+Another type of tool is the Range Extender, which helps to extend the visibility from 7x7 to 11x11 square.
+
+All the rovers should have the extraction tools. Let ⅕ of the rovers be wheelers, other ⅖ be walkers and treads. The main reason for the wheelers is less because they can move faster and extract in larger amount.
+
+**8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
 
 The rovers can be given the ability to sense the liquid terrain and also need to ensure that they can drill through them. While moving, it has to be ensured that the rover does not get toppled upside down. Additional features that could be added are, to prevent the parts from eroding by the exposure of cosmic rays, additional sensors can to be added to enhance each of the rovers' features.
