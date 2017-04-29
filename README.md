@@ -75,11 +75,38 @@ public ScanMap(MapTile[][] scanArray, int size, Coord centerPoint){
   this.centerPoint = centerPoint;		
 }
 ```
-As it moves it stores details of the coordinate in a `scanArray` which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array. This helps to create the map which can be used to share the information with the communication server as well other rovers.
+As it moves it stores details of the coordinate in a `scanArray` which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array.
+
+![scanMap](URL for scanMap screenshot)
+
+This helps to create the map which can be used to share the information with the communication server as well other rovers.
 
 **3.What are the communication commands?**
 
-The `communication.java` contains the required methods for communicating with the server as well as other rovers. This program contains code for getting the details of the rover as in what are the features it contains, the coordinate location of the rover it is approaching, the science details. The point to be noted is that, this communication will perform these activities for communicating with other rovers as well as to the server.
+The `communication.java` contains the required methods for communicating with the server as well as other rovers. This program contains code for getting the details of the rover as in what are the features it contains, the coordinate location of the rover it is approaching, the science details.
+```
+if (roverDetail == null) {
+  throw new NullPointerException("roverDetail is null");
+}
+```
+In this case, a `NullPointerException` is thrown because the `roverDetail` object (instance of the class `RoverDetail`) is null. Otherwise the `roverDetailMsg` JSONObject can be populated with relevant data in the following way:
+
+```
+roverDetailMsg.put("roverName", roverDetail.getRoverName());
+roverDetailMsg.put("x", roverDetail.getX());
+roverDetailMsg.put("y", roverDetail.getY());
+```
+
+In order to communicate with the server, several request headers are added. This depends on the API call that's being made. For example, in order to send a `GET` request to the URL `/science/all`, the following request headers are added:
+```
+        con.setRequestMethod("GET");
+		con.setRequestProperty("Rover-Name", rovername);
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
+```
+where `con` is an instance of `HttpURLConnection`.
+
+This communication will perform these activities for communicating with other rovers as well as with the server.
 
 **4.How are the pathfinding classes used?**
 
@@ -96,4 +123,4 @@ From doc
 
 **7.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
 
-From doc
+The rovers can be given the ability to sense the liquid terrain and also need to ensure that they can drill through them. While moving, it has to be ensured that the rover does not get toppled upside down. Additional features that could be added are, to prevent the parts from eroding by the exposure of cosmic rays, additional sensors can to be added to enhance each of the rovers' features.
