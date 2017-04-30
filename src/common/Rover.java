@@ -481,6 +481,7 @@ public class Rover {
             Communication communication = new Communication(
                 "http://localhost:3000/api", rovername, "open_secret" );
             communication.markScienceForGather( coord );
+            sendTo_RCP.println( "GATHER" );
         } catch ( Exception e ) {
             System.err.println(
                 "Communication server communication failed with error: "

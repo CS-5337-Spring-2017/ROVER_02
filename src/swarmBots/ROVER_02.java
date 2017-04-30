@@ -210,6 +210,10 @@ public class ROVER_02 extends Rover {
 							System.out.println("moving North, because I'm directed to go: "+dirChar);
 							moveNorth();
 						}
+						if(dirChar == 'U'){
+							System.out.println("got U, because I'm directed to go: "+dirChar);
+							roverDetail.setRoverMode( RoverMode.EXPLORE );
+						}
 						
 						//setting gather mode
 						roverDetail.setRoverMode( RoverMode.GATHER );
