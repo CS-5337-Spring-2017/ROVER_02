@@ -157,6 +157,7 @@ public class ROVER_02 extends Rover {
 
 				//adding RoverDetail and ScienceDetail as per the unified Comm server
 				RoverDetail roverDetail = new RoverDetail();
+				
 				ScienceDetail scienceDetail = analyzeAndGetSuitableScience();
 
 				//adding science/harvest
@@ -308,7 +309,11 @@ public class ROVER_02 extends Rover {
 				}//end bracket for ELSE/DEFAULT MOVEMENT 
 
 				//END following else portion is for when scienceDetail is not found, this is our default movement
+				
+				//-----> posting details of ROVER-02 in communication server
+				sendRoverDetail();
 
+               // postScanMapTiles( currentLoc, doScan().getScanMap() );
 
 				// another call for current location
 				currentLoc = getCurrentLocation();
