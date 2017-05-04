@@ -85,7 +85,7 @@ Each Rover has been assigned a tool. Each tool has the ability to harvest a spec
 
 One of the important things you might need to know as well is the objects and their shapes:
 
-Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" />  	Radioactive ( R ): 	<img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
+Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" /> 		Radioactive ( R ): <img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
 
 Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>	Mineral( M ): <img src="https://s28.postimg.org/wvbkus0i1/Screen_Shot_2017-05-03_at_2.07.42_PM.png" width="5%"/>    
 
@@ -100,7 +100,7 @@ To apply any of these sciences to the map, you just need to add the letter corre
   
 Also there are several types of Terrains that you can add to create you own map or add more difficulties to the existing one as showing: 
 
-<img src="https://s28.postimg.org/gzmqrh9xl/Screen_Shot_2017-05-03_at_7.02.57_PM.png" width="17%"/>
+<img src="https://s28.postimg.org/gzmqrh9xl/Screen_Shot_2017-05-03_at_7.02.57_PM.png" width="30%"/>
 
 These are defined in Terrain.java in the enums package:
 
@@ -117,7 +117,7 @@ These are defined in Terrain.java in the enums package:
 Each rover has been configured with set of tools, type of science that rover can get, and the type of terrains the rover can go over without getting stuck. 
 Rover tools are: 
 
-<img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="17%" />
+<img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="30%" />
 
 
 
