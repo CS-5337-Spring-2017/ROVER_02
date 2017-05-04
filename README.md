@@ -1,14 +1,14 @@
-# Rover Swarm Project - Rover 02
+<h1> # Rover Swarm Project - Rover 02 </h1>
 
-This project is a simulation of a set of autonomous rovers that are exploring, mapping, and harvesting science on an alien planet. The rovers have very limited capabilities individually and therefore have to operate as a swarm to fulfill their objectives.
+<p> This project is a simulation of a set of autonomous rovers that are exploring, mapping, and harvesting science on an alien planet. The rovers have very limited capabilities individually and therefore have to operate as a swarm to fulfill their objectives. </p>
 
 ![image of mars rovers](http://i.imgur.com/8n6arMu.jpg)
 
-## Group-2
+<h3> ## Group-2 </h3>
 
-**1.What are the movement commands?  What are the scan commands?**
+<h4> **1.What are the movement commands?  What are the scan commands?** </h4>
 
-The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object.
+<p> The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object. </p>
 
 This is how the `moveNorth()` method is implemented:
 
@@ -43,9 +43,9 @@ The movement of the rover is indicated by four letters as East, West, North, Sou
   			cardinals[2] = "S";
   			cardinals[3] = "W";
 
-  To move the rover to any of these directions, a simple call to one of the functions corresponding to that direction would suffice. This class has all the four function which each function will send the indicated letter matched the movement to the server to move your rover.
+ <p> To move the rover to any of these directions, a simple call to one of the functions corresponding to that direction would suffice. This class has all the four function which each function will send the indicated letter matched the movement to the server to move your rover. </p>
 
-  Each rover is designed with a unique movement algorithm. This algorithm make sure that the rover knows where to go before moving. For example, the function below is making sure that the rover is checking whether the next move is allowed or not:
+<p>  Each rover is designed with a unique movement algorithm. This algorithm make sure that the rover knows where to go before moving. For example, the function below is making sure that the rover is checking whether the next move is allowed or not: </p>
 
           if (scanMapTiles[centerIndex +1][centerIndex].getHasRover()
               || scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.SAND
@@ -56,11 +56,11 @@ The movement of the rover is indicated by four letters as East, West, North, Sou
           } else {
             moveEast();		
 
-  ROVER-02 is not allowed to step over sand and over another rover. These conditions are also pre-assigned to each rover. However, since the rover is checking each move, the rover has to communicate with the communication server to send whether this move is allowed or not, if allowed, then move. If this move is not allowed, then based on algorithm that this rover has, get a different direction move and check.
+<p>  ROVER-02 is not allowed to step over sand and over another rover. These conditions are also pre-assigned to each rover. However, since the rover is checking each move, the rover has to communicate with the communication server to send whether this move is allowed or not, if allowed, then move. If this move is not allowed, then based on algorithm that this rover has, get a different direction move and check.
 
   All these commands and communication is inside the while loop which makes the rover keep going unless the rover is stuck somewhere.
 
-The `ScanMap.java` is the main controller responsible for scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position.
+The `ScanMap.java` is the main controller responsible for scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position. </p>
 
 ```
 public ScanMap(){
@@ -85,9 +85,11 @@ Each Rover has been assigned a tool. Each tool has the ability to harvest a spec
 
 One of the important things you might need to know as well is the objects and their shapes:
 
-Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" />  Radioactive ( R ): 	<img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
+ Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" /> 		Radioactive ( R ): <img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
 
-Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>	Mineral( M ): <img src="https://s28.postimg.org/wvbkus0i1/Screen_Shot_2017-05-03_at_2.07.42_PM.png" width="5%"/>    
+
+Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>	
+Mineral( M ): <img src="https://s28.postimg.org/wvbkus0i1/Screen_Shot_2017-05-03_at_2.07.42_PM.png" width="5%"/>    
 
 To apply any of these sciences to the map, you just need to add the letter corresponding to the science name as showing:
 
@@ -100,7 +102,7 @@ To apply any of these sciences to the map, you just need to add the letter corre
   
 Also there are several types of Terrains that you can add to create you own map or add more difficulties to the existing one as showing: 
 
-<img src="https://s28.postimg.org/gzmqrh9xl/Screen_Shot_2017-05-03_at_7.02.57_PM.png" width="17%"/>
+<img src="https://s28.postimg.org/gzmqrh9xl/Screen_Shot_2017-05-03_at_7.02.57_PM.png" width="30%"/>
 
 These are defined in Terrain.java in the enums package:
 
@@ -110,22 +112,20 @@ These are defined in Terrain.java in the enums package:
    NONE ("X")	<br />
    ROCK ("R")   <br />
    SOIL ("N") <br />
-	 GRAVEL ("G") <br />
-	 SAND ("S") <br />
+   GRAVEL ("G") <br />
+   SAND ("S") <br />
    FLUID ("F")
 
 Each rover has been configured with set of tools, type of science that rover can get, and the type of terrains the rover can go over without getting stuck. 
 Rover tools are: 
 
-<img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="17%" />
-
+<img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="30%" />
 
 <h1>Scan Commands </h1>
 
-The ScanMap.java is the main controller of scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position and as it moves it takes it stores details of the coordinate in a scanArray which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array this helps to create the map which can be used to track the information but the communication server as well other rovers
+<p> The ScanMap.java is the main controller of scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position and as it moves it takes it stores details of the coordinate in a scanArray which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array this helps to create the map which can be used to track the information but the communication server as well other rovers </p>
 
-
-**3.What are the communication commands?**
+<h3> **3.What are the communication commands?** </h3> 
 
 The `communication.java` contains the required methods for communicating with the server as well as other rovers. This program contains code for getting the details of the rover as in what are the features it contains, the coordinate location of the rover it is approaching, the science details.
 ```
