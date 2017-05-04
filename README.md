@@ -216,6 +216,10 @@ if(current.ypos < start.ypos) {
                 }
 ```
 
+Here is a demonstration of the scenario when the Rover-02 is moving south because it received an `S` from the A-Star, meaning the nearest crystal is towards its south.
+
+![A_Star img](https://i.imgur.com/gyjKWpF.png)
+
 
 **5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other? Also, what are some approaches to
 not getting the rovers stuck in a corner?**
@@ -239,12 +243,87 @@ If it is, it travels to that science and prints out the following pair of messag
 
 On the other hand, while a rover is locating a piece of science, if it finds that another rover is closer to the science, the current rover switches to the default explore mode and lets the other rover harvest that science.
 
- ```roverDetail.setRoverMode( RoverMode.EXPLORE );```
+ ```
+ roverDetail.setRoverMode( RoverMode.EXPLORE );
+ ```
 
 
 **6.What equipment is available to a rover and how is it configured?**
 
-pending
+The list of equipments available vary for each of the rovers. Upon every request to access the list of equipments for each of the rovers, we will get one drive type (instance of the `RoverDriveType` class) and two tool types (instance of the `RoverToolType` class). We do this if the command sent to the server consists of the string `“EQUIPMENT”`:
+
+```
+else if(input.startsWith("EQUIPMENT")) {
+        	Gson gson = new GsonBuilder()
+        			.setPrettyPrinting()
+        			.enableComplexMapKeySerialization()
+        			.create();
+        	ArrayList<String> eqList = new ArrayList<String>();
+
+        	eqList.add(rover.getRoverDrive().toString());
+        	eqList.add(rover.getTool_1().toString());
+        	eqList.add(rover.getTool_2().toString());
+```
+
+The result returned by the server will consist of a series of text strings. The number of lines of text returned is
+variable.
+
+The first line of text returned will be the string “EQUIPMENT”. The following lines will be an `ArrayList<String>` object that has been converted to a string json format.
+
+The last line of text returned will be the string `“EQUIPMENT_END”`. When reconstructed the ArrayList will contain a listing of the Rover Drive system Type and the two RoverToolType attachments. The Drive and ToolTypes will be listed by their string converted names.
+
+The following example shows how the `RoverToolType` and `RoverDriveType` classes handle the cases for each tool type/drive type:
+
+```
+RoverToolType output;
+switch(input){
+  ...
+  case "SPECTRAL_SENSOR":
+    		output = RoverToolType.SPECTRAL_SENSOR;
+    		break;
+        ...
+      }
+```
+
+```
+RoverToolType output;
+switch(input){
+  ...
+  case "WALKER":
+      		output = RoverDriveType.WALKER;
+      		break;
+        }
+        ```
+
+When the rovers are traversing the map, either following their default movement logic or the pathfinding (A-Star) algorithm, they will be communicating with the central server, which in our case is called the communication server. Alongside this communication server works the class `Rover.java`, which serves the purpose of being the base class for all the rovers. In this base class, we are implementing a method to retrieve a list of the rover's equipment from the server.
+
+```
+protected ArrayList<String> getEquipment() throws IOException {
+  ...
+  if (jsonEqListIn.startsWith("EQUIPMENT")) {
+			while (!(jsonEqListIn = receiveFrom_RCP.readLine()).equals("EQUIPMENT_END")) {
+				if (jsonEqListIn == null) {
+					break;
+				}
+				jsonEqList.append(jsonEqListIn);
+				jsonEqList.append("\n");
+			}
+		}
+```
+As stated above, this portion of the method checks if the string that was returned starts with `"EQUIPMENT"`. Upon satisfying this condition it goes until the last line of the text returned and keeps appending to the StringBuilder instance `jsonEqList`. Otherwise, it would simply mean that the server response did not start with "EQUIPMENT" and would return a null in that case. Finally it will return an ArrayList that contains a listing of the Rover Drive system Type and the two RoverToolType attachments.
+
+Rovers 01, 02 and 03 have different drive types and tool types and based on their corresponding type, their actions vary. For example, due to Rover_02's having a `"SPECTRAL_SENSOR"`, it will be able to detect a crystal science, but might not be able to detect other types of science. The types are defined in the `RoverConfiguration` class:
+
+```
+    ROVER_01 ("WHEELS", "EXCAVATOR", "CHEMICAL_SENSOR"),
+	ROVER_02 ("WALKER", "SPECTRAL_SENSOR", "DRILL"),
+	ROVER_03 ("TREADS", "EXCAVATOR", "RADAR_SENSOR"),
+```
+In this project, we are running a simulation of NASA's mars rovers. In reality, for NASA's Mars Science Laboratory mission, Curiosity, the following are the detectors and their related instruments:
+
+![radiation_detector_nasa_curiosity](http://i.imgur.com/s9nxYK6.png)
+
+More information for Curiosity's sensors and detectors can be [found here](https://mars.nasa.gov/msl/mission/instruments/radiationdetectors/)
 
 **7.Describe the different drive and tool types, how they are used and how they interact with the
 environment. Go into some of the design considerations for choosing different equipment
