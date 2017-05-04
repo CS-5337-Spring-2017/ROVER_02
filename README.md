@@ -319,7 +319,7 @@ switch(input){
       		output = RoverDriveType.WALKER;
       		break;
         }
-        ```
+```
 
 When the rovers are traversing the map, either following their default movement logic or the pathfinding (A-Star) algorithm, they will be communicating with the central server, which in our case is called the communication server. Alongside this communication server works the class `Rover.java`, which serves the purpose of being the base class for all the rovers. In this base class, we are implementing a method to retrieve a list of the rover's equipment from the server.
 
