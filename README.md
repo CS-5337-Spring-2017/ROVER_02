@@ -336,20 +336,25 @@ protected ArrayList<String> getEquipment() throws IOException {
 			}
 		}
 ```
+
 As stated above, this portion of the method checks if the string that was returned starts with `"EQUIPMENT"`. Upon satisfying this condition it goes until the last line of the text returned and keeps appending to the StringBuilder instance `jsonEqList`. Otherwise, it would simply mean that the server response did not start with "EQUIPMENT" and would return a null in that case. Finally it will return an ArrayList that contains a listing of the Rover Drive system Type and the two RoverToolType attachments.
 
 Rovers 01, 02 and 03 have different drive types and tool types and based on their corresponding type, their actions vary. For example, due to Rover_02's having a `"SPECTRAL_SENSOR"`, it will be able to detect a crystal science, but might not be able to detect other types of science. The types are defined in the `RoverConfiguration` class:
+
 
 ```
     ROVER_01 ("WHEELS", "EXCAVATOR", "CHEMICAL_SENSOR"),
 	ROVER_02 ("WALKER", "SPECTRAL_SENSOR", "DRILL"),
 	ROVER_03 ("TREADS", "EXCAVATOR", "RADAR_SENSOR"),
 ```
+
 In this project, we are running a simulation of NASA's mars rovers. In reality, for NASA's Mars Science Laboratory mission, Curiosity, the following are the detectors and their related instruments:
 
 ![radiation_detector_nasa_curiosity](http://i.imgur.com/s9nxYK6.png)
 
 More information for Curiosity's sensors and detectors can be [found here](https://mars.nasa.gov/msl/mission/instruments/radiationdetectors/)
+
+
 
 **7.Describe the different drive and tool types, how they are used and how they interact with the
 environment. Go into some of the design considerations for choosing different equipment
@@ -380,6 +385,8 @@ Another type of tool is the Range Extender, which helps to extend the visibility
 
 All the rovers should have the extraction tools. Let ⅕ of the rovers be wheelers, other ⅖ be walkers and treads. The main reason for the wheelers is less because they can move faster and extract in larger amount.
 
+
 **8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
+
 
 The rovers can be given the ability to sense the liquid terrain and also need to ensure that they can drill through them. While moving, it has to be ensured that the rover does not get toppled upside down. Additional features that could be added are, to prevent the parts from eroding by the exposure of cosmic rays, additional sensors can to be added to enhance each of the rovers' features.
