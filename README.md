@@ -6,9 +6,9 @@
 
 <h3> ## Group-2 </h3>
 
-<h4> **1.What are the movement commands?  What are the scan commands?** </h4>
+<h4> 1.What are the movement commands?  What are the scan commands? </h4>
 
-<p> The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object. </p>
+The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object.
 
 This is how the `moveNorth()` method is implemented:
 
@@ -60,6 +60,8 @@ The movement of the rover is indicated by four letters as East, West, North, Sou
 
   All these commands and communication is inside the while loop which makes the rover keep going unless the rover is stuck somewhere.
 
+<h1>Scan Commands </h1>
+
 The `ScanMap.java` is the main controller responsible for scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position. </p>
 
 ```
@@ -81,26 +83,28 @@ As it moves it stores details of the coordinate in a `scanArray` which is used t
 
 This helps to create the map which can be used to share the information with the communication server as well other rovers.
 
-Each Rover has been assigned a tool. Each tool has the ability to harvest a specific type of the science. Later in this documentation, we will describe more about these tools. 
+Each Rover has been assigned a tool. Each tool has the ability to harvest a specific type of the science. Later in this documentation, we will describe more about these tools.
 
 One of the important things you might need to know as well is the objects and their shapes:
 
  Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" /> 		Radioactive ( R ): <img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
 
 
-Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>	
+Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>
 Mineral( M ): <img src="https://s28.postimg.org/wvbkus0i1/Screen_Shot_2017-05-03_at_2.07.42_PM.png" width="5%"/>    
 
 To apply any of these sciences to the map, you just need to add the letter corresponding to the science name as showing:
 
-  NONE("N") <br />
-	RADIOACTIVE("Y") <br />
-	ORGANIC("O")<br />
-	MINERAL("M")<br />
-	ARTIFACT("A")<br />
-	CRYSTAL("C")<br />
-  
-Also there are several types of Terrains that you can add to create you own map or add more difficulties to the existing one as showing: 
+```
+    NONE("N")
+    RADIOACTIVE("Y")
+    ORGANIC("O")
+    MINERAL("M")
+    ARTIFACT("A")
+    CRYSTAL("C")
+```
+
+Also there are several types of Terrains that you can add to create you own map or add more difficulties to the existing one as showing:
 
 <img src="https://s28.postimg.org/gzmqrh9xl/Screen_Shot_2017-05-03_at_7.02.57_PM.png" width="30%"/>
 
@@ -108,24 +112,22 @@ These are defined in Terrain.java in the enums package:
 
 <img src="https://s28.postimg.org/jwed5i559/Screen_Shot_2017-05-03_at_7.12.06_PM.png" width="60%"/>
 
-
-   NONE ("X")	<br />
-   ROCK ("R")   <br />
-   SOIL ("N") <br />
-   GRAVEL ("G") <br />
-   SAND ("S") <br />
+```
+   NONE ("X")
+   ROCK ("R")
+   SOIL ("N")
+   GRAVEL ("G")
+   SAND ("S")
    FLUID ("F")
+```
 
-Each rover has been configured with set of tools, type of science that rover can get, and the type of terrains the rover can go over without getting stuck. 
-Rover tools are: 
+Each rover has been configured with set of tools, type of science that rover can get, and the type of terrains the rover can go over without getting stuck.
+Rover tools are:
 
 <img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="30%" />
 
-<h1>Scan Commands </h1>
 
-<p> The ScanMap.java is the main controller of scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position and as it moves it takes it stores details of the coordinate in a scanArray which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array this helps to create the map which can be used to track the information but the communication server as well other rovers </p>
-
-<h3> **3.What are the communication commands?** </h3> 
+<h3> **3.What are the communication commands?** </h3>
 
 The `communication.java` contains the required methods for communicating with the server as well as other rovers. This program contains code for getting the details of the rover as in what are the features it contains, the coordinate location of the rover it is approaching, the science details.
 ```
@@ -152,9 +154,68 @@ where `con` is an instance of `HttpURLConnection`.
 
 This communication will perform these activities for communicating with other rovers as well as with the server.
 
-**4.How are the pathfinding classes used?**
+<h4>  **4.How are the pathfinding classes used?**</h4>
 
-pending
+The basic feature of the path finding algorithm is the implementation of the A-Star algorithm. The purpose of the A-Star algorithm is to find the shortest path at each step. The rovers, while traversing through their corresponding maps, make a call to the `findPath` method in the class `A-Star` like the following:
+
+```
+char dirChar = aStar.findPath( getCurrentLocation(),
+              new Coord( scienceDetail.getX(),
+              scienceDetail.getY() ),driveType );
+```
+The above statement is implemented in the rover program, the variable `dirChar` is going to have the values in which direction the rover has to move, say `N`,`S`,`W`,`E`.
+
+This statement is repeatedly called and it returns which direction the rover has to move next. That is, if the rover is standing at a current location then it finds the next step which it has to take based on the A-Star algorithm.
+
+The findPath method implemented in the A-Star class returns the series of steps that the rover has to follow in order to reach to the crystal (or any other science material based on its configuration).
+If there is a block then the variable will have an 'U' which means that particular coordinate cannot be visited by the rover. In the following declaration of the findPath method, the first two argument it takes are instances of the `Coord` class. When implementing we are sending the `getCurrentLocation` `ew Coord( scienceDetail.getX(),
+scienceDetail.getY()` to be those two arguments. The last argument is the driveType, and instance of `RoverDriveType`:
+
+```
+public char findPath(Coord start, Coord dest, RoverDriveType drive) {
+  // If destination coordinate is blocked/unreachable, return U
+    if (blocked(dest, drive)) {
+      return 'U';
+    }
+    ...
+    ...
+}
+```
+The following snippet from the method `findPath` helps to get the current location of the rover's coordinate and then stored into a variable called current:
+
+```
+ while(!openSet.isEmpty()) {
+            Coord current = null;
+            for(int i = 0; i < openSet.size(); i++) {
+                if(current == null || fScore[openSet.get(i).xpos][openSet.get(i)
+                .ypos] < fScore[current.xpos][current.ypos]) {
+                    current = openSet.get(i);
+                }
+```
+In order to check whether the rover has moved from the previous coordinate, so that it can ensure that the algorithm provides the required path towards which it has to move further.
+
+```
+if(current.equals(dest)) {
+                Coord prev = cameFrom[current.xpos][current.ypos];
+                while(!start.equals(prev)) {
+                    current = prev;
+                    prev = cameFrom[prev.xpos][prev.ypos];
+                }
+```
+
+Based on the current location it redirects to the direction the rover has to move further. Thus the final result will be a character that instructs the rover of its next direction.
+```
+if(current.ypos < start.ypos) {
+                    return 'N';
+                } else if(current.xpos > start.xpos) {
+                    return 'E';
+                } else if(current.ypos > start.ypos) {
+                    return 'S';
+                } else {
+                    return 'W';
+                }
+```
+
 
 **5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other? Also, what are some approaches to
 not getting the rovers stuck in a corner?**
