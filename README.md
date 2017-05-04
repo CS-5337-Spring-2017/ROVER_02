@@ -81,6 +81,46 @@ As it moves it stores details of the coordinate in a `scanArray` which is used t
 
 This helps to create the map which can be used to share the information with the communication server as well other rovers.
 
+Each Rover has been assigned a tool. Each tool has the ability to harvest a specific type of the science. Later in this documentation, we will describe more about these tools. 
+
+One of the important things you might need to know as well is the objects and their shapes:
+
+Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" />  	Radioactive ( R ): 	<img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
+
+Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>	Mineral( M ): <img src="https://s28.postimg.org/wvbkus0i1/Screen_Shot_2017-05-03_at_2.07.42_PM.png" width="5%"/>    
+
+To apply any of these sciences to the map, you just need to add the letter corresponding to the science name as showing:
+
+  NONE("N") <br />
+	RADIOACTIVE("Y") <br />
+	ORGANIC("O")<br />
+	MINERAL("M")<br />
+	ARTIFACT("A")<br />
+	CRYSTAL("C")<br />
+  
+Also there are several types of Terrains that you can add to create you own map or add more difficulties to the existing one as showing: 
+
+<img src="https://s28.postimg.org/gzmqrh9xl/Screen_Shot_2017-05-03_at_7.02.57_PM.png" width="17%"/>
+
+These are defined in Terrain.java in the enums package:
+
+<img src="https://s28.postimg.org/jwed5i559/Screen_Shot_2017-05-03_at_7.12.06_PM.png" width="60%"/>
+
+
+   NONE ("X")	<br />
+   ROCK ("R")   <br />
+   SOIL ("N") <br />
+	 GRAVEL ("G") <br />
+	 SAND ("S") <br />
+   FLUID ("F")
+
+Each rover has been configured with set of tools, type of science that rover can get, and the type of terrains the rover can go over without getting stuck. 
+Rover tools are: 
+
+<img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="17%" />
+
+
+
 **3.What are the communication commands?**
 
 The `communication.java` contains the required methods for communicating with the server as well as other rovers. This program contains code for getting the details of the rover as in what are the features it contains, the coordinate location of the rover it is approaching, the science details.
