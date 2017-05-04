@@ -1,4 +1,4 @@
-<h1> # Rover Swarm Project - Rover 02 </h1>
+<h1> Rover Swarm Project - Rover 02 </h1>
 
 <p> This project is a simulation of a set of autonomous rovers that are exploring, mapping, and harvesting science on an alien planet. The rovers have very limited capabilities individually and therefore have to operate as a swarm to fulfill their objectives. </p>
 
@@ -153,6 +153,32 @@ In order to communicate with the server, several request headers are added. This
 where `con` is an instance of `HttpURLConnection`.
 
 This communication will perform these activities for communicating with other rovers as well as with the server.
+
+When the rovers are moving throughout the map, they will be conversing with the communication server and vice versa. In order to make that happen, we are using an API. This API provides us with a variety of options for doing RESTful services. As a result, we will be able to extract valuable information as each of the rovers are making their way through the map and define necessary actions based on the information we get. For example: when the communication server is running, the call ` /api/science/all` gives us the following result:
+
+```
+[
+  {
+      hasrover: false,
+      science: "CRYSTAL",
+      x: 27,
+      y: 8,
+      terrain: "SOIL",
+      f: 2,
+      g: 2
+  },
+  {
+      hasrover: false,
+      science: "CRYSTAL",
+      x: 24,
+      y: 10,
+      terrain: "SOIL",
+      f: 2,
+      g: 2
+  }
+]
+```
+In this case, we are receiving the information that Rover_02 has found `CRYSTAL` in the terrain `SOIL` at positions `x` and `y` stated above. The Communications Server API contains several other API calls that returns detailed information for `Global`, `Sciences`, `Gather`, `Coordinate` and `Misc`.
 
 <h4>  **4.How are the pathfinding classes used?**</h4>
 
