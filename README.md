@@ -85,7 +85,7 @@ Each Rover has been assigned a tool. Each tool has the ability to harvest a spec
 
 One of the important things you might need to know as well is the objects and their shapes:
 
-Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" />  	Radioactive ( R ): 	<img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
+Crystal ( C ) : <img src="https://s28.postimg.org/bx5ewp0nd/Screen_Shot_2017-05-03_at_2.07.34_PM.png" width="5%" />  Radioactive ( R ): 	<img src="https://s28.postimg.org/guizht2mh/Screen_Shot_2017-05-03_at_2.07.26_PM.png" width="5%"/>		
 
 Organic ( O ): <img src="https://s28.postimg.org/dri9efnnt/Screen_Shot_2017-05-03_at_2.07.54_PM.png" width="5%"/>	Mineral( M ): <img src="https://s28.postimg.org/wvbkus0i1/Screen_Shot_2017-05-03_at_2.07.42_PM.png" width="5%"/>    
 
@@ -119,6 +119,10 @@ Rover tools are:
 
 <img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="17%" />
 
+
+<h1>Scan Commands </h1>
+
+The ScanMap.java is the main controller of scanning the entire map. This program contains a scanArray, size and the coordinates as the parameters which is initialized to null if the rover is at the start position and as it moves it takes it stores details of the coordinate in a scanArray which is used to get the details of a particular coordinate. Another purpose of this program is that, this is input for creating the map by the rover, as the details of the coordinates are stored in an array this helps to create the map which can be used to track the information but the communication server as well other rovers
 
 
 **3.What are the communication commands?**
