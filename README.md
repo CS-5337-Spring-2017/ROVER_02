@@ -466,8 +466,8 @@ The different types of drive and tool types are:
 
 Next comes the extraction tools, there are two types of extraction tools:  
 
-* Drills
-* Excavators
+* Drills can extract samples of science from Rock or Gravel terrain.
+* Excavators can extract samples of science from Soil or Sand terrain.
 
 These are used in rock and gravel, soil and sand respectively. Another important tool is the scanner tools, the scanning tools are:
 
