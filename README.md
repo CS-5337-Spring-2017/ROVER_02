@@ -126,6 +126,66 @@ Rover tools are:
 
 <img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="30%" />
 
+<h3> **3.What are the harvesting commands?** </h3>
+
+The harvesting mechanism in the rovers are implemented through the `GATHER` commands and its associated mechanism. Firstly, when the `GATHER` command is issued, if the rover is positioned on a tile that contains a sample of science, and if the rover
+has the proper extraction tool for that particular tile terrain, then the science is removed from the map and placed
+in the rover’s cargo storage.
+
+While traversing, the rovers keep checking if the `scienceDetail` instance of class `ScienceDetail` is null. If not, it means that the server has responded with a specific kind of science. The rover then prints out the details for that particular science first:
+
+```
+if (scienceDetail != null) {
+		System.out.println("FOUND SCIENCE TO GATHER: " + scienceDetail);
+	}
+```
+
+To have a deeper look at the `scienceDetail` instance, we need to go to the base class for the rovers, `ROVER.java`:
+
+```
+protected ScienceDetail analyzeAndGetSuitableScience() {
+		ScienceDetail minDistanceScienceDetail = null;
+		try {
+			Communication communication = new Communication("http://localhost:3000/api", rovername, "open_secret");
+
+			ScienceDetail[] scienceDetails = communication.getAllScienceDetails();
+			RoverDetail[] roverDetails = communication.getAllRoverDetails();
+
+			if (roverDetails == null || roverDetails.length == 0) {
+				if (scienceDetails != null && scienceDetails.length > 0) {
+					return analyzeAndGetSuitableScienceForCurrentRover(scienceDetails);
+				}
+			}
+      ...
+      ...
+    }
+```
+
+The `analyzeAndGetSuitableScience()` method does the bulk of the work for the gathering procedures. The `getAllScienceDetails` method returns an array of the following:
+
+* `x` and `y` coordinates
+
+* if it has a rover
+
+* the name of the science itself
+
+* the terrain it was found on, and
+
+* setter values for the rover that found and gathered it
+
+Back in `ROVER_02.java`, if we get something in the `scienceDetail`, we do either of two things. First, if our current position coincides with the position of the science, we gather it and print out a statement saying the science has been gathered:
+
+```
+if ( scienceDetail.getX() == getCurrentLocation().xpos
+							&& scienceDetail.getY() == getCurrentLocation().ypos ) {
+						gatherScience( getCurrentLocation() );
+						System.out.println( "$$$$$> Gathered science "
+								+ scienceDetail.getScience() + " at location "
+								+ getCurrentLocation() );
+					}
+```
+
+Otherwise, the rover will head towards that science by calling the pathfinding algorithm, in this case, the A-Star. Before doing so, it sets its appropriate `driveType` and `ToolType`. Afterwards, it sets its motion based on the response it gets from the A-Star, which will be either `N` for North, `E` for East, `W` for West or `S` for South.
 
 <h3> **3.What are the communication commands?** </h3>
 
