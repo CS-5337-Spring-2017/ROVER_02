@@ -4,9 +4,9 @@
 
 ![image of mars rovers](http://i.imgur.com/8n6arMu.jpg)
 
-<h3> ## Group-2 </h3>
+<h3> Group-2 </h3>
 
-<h4> 1.What are the movement commands?  What are the scan commands? </h4>
+<h4> **1.What are the movement commands? What are the scan commands?** </h4>
 
 The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object.
 
@@ -126,7 +126,7 @@ Rover tools are:
 
 <img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="30%" />
 
-<h3> **3.What are the harvesting commands?** </h3>
+<h3> **2.What are the harvesting commands?** </h3>
 
 The harvesting mechanism in the rovers are implemented through the `GATHER` commands and its associated mechanism. Firstly, when the `GATHER` command is issued, if the rover is positioned on a tile that contains a sample of science, and if the rover
 has the proper extraction tool for that particular tile terrain, then the science is removed from the map and placed
@@ -333,6 +333,13 @@ On the other hand, while a rover is locating a piece of science, if it finds tha
  roverDetail.setRoverMode( RoverMode.EXPLORE );
  ```
 
+The movement for the rovers have been implemented in a way where it checks if the rover is going to face an end in the terrain in its next move:
+
+`
+if(scanMapTiles[centerIndex -1][centerIndex].getTerrain() ==Terrain.NONE){...}
+`
+If this is true, the rover considers that to be a block and implements the sidestepping logic it has for facing a `block`. It sets the `stepCount` to a value of 5, does sidestepping accordingly, and then check if the next move is valid once again.
+
 
 **6.What equipment is available to a rover and how is it configured?**
 
@@ -443,7 +450,7 @@ These are used in rock and gravel, soil and sand respectively. Another important
 
 Another type of tool is the Range Extender, which helps to extend the visibility from 7x7 to 11x11 square.
 
-All the rovers should have the extraction tools. Let ⅕ of the rovers be wheelers, other ⅖ be walkers and treads. The main reason for the wheelers is less because they can move faster and extract in larger amount.
+All the rovers should have the extraction tools. Let ⅕ of the rovers be wheelers, other 4/5 be walkers and treads. The main reason for the wheelers is less because they can move faster and extract in larger amount.
 
 
 **8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
