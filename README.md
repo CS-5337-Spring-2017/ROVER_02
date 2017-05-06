@@ -484,6 +484,8 @@ All the rovers should have the extraction tools. Let 1/3 of the rovers be wheele
 
 **8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
 
-  - One of the difficulties that might be added to the  rover's movements are the ability to avoid abstical that aren't part of their configuration.  
-
+  - One of the difficulties that might be added to the rover's movements are the ability to avoid obstacle that aren't part of their configuration.  
+  - In the future, rovers could be configured to know whether they have already Explored a certain area so they wouldn't go back there again.
+  - One of the ideas that could be implemented later is that rovers can establish a separate communication protocol for a map and another for movements.
+  
 The rovers can be given the ability to sense the liquid terrain and also need to ensure that they can drill through them. While moving, it has to be ensured that the rover does not get toppled upside down. Additional features that could be added are, to prevent the parts from eroding by the exposure of cosmic rays, additional sensors can to be added to enhance each of the rovers' features.
