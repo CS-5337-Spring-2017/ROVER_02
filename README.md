@@ -8,31 +8,31 @@
 
 <h1 align=center > What's in this Documentation: </h1>
 
-<h3>**1.What are the movement commands? What are the scan commands?**</h3>
+<h3>1.What are the movement commands? What are the scan commands?</h3>
   <p>- Brief information about the rover movement and some of the useful commands that you might need to understand the rover. </p>
 
-<h3>**2.What are the harvesting commands?**</h3>
+<h3>2.What are the harvesting commands?</h3>
   <p>- Moving around is cool but the purpose of these rovers is to harvest as much science as they can. In this section, you will find
     more about how rovers harvesting these sciences. </p>
 
-<h3>**3.What are the communication commands?** </h3>
+<h3>3.What are the communication commands?</h3>
 <p> - Each rover can't stand alone. To get the best out of each rover in less time, you need all the rovers to communicate together. 
   In this section, you will find more information about how they communicate together through some methods calls. </p>
 
-<h3>**4.How are the pathfinding classes used?**</h3>
+<h3>4.How are the pathfinding classes used?</h3>
  <p> - In this section, you will go deeper to understand how to rover is deciding the shortest path to a specific science using some algorithm. </p>
 
-<h3>**5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other?**  
-**Also, what are some approaches to not getting the rovers stuck in a corner?**</h3>
+<h3>5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other? 
+Also, what are some approaches to not getting the rovers stuck in a corner?</h3>
 <p>- In this section, we explain more about rovers step-by-step decisions based on exploring or harvesting mode. </p>
 
-<h3>**6.What equipment is available to a rover and how is it configured?**</h3>
+<h3>6.What equipment is available to a rover and how is it configured?</h3>
  <p> - Each rover has its own equipment. We explain how to configure each rover with its own tools.</p>
 
-<h3>**7.Describe the different drive and tool types, how they are used and how they interact with the environment. Go into some of the design considerations for choosing different equipment configurations for small (5) medium (6-10) and large (10+) groups of rovers. How should tools and drive types be mixed?**</h3>
+<h3>7.Describe the different drive and tool types, how they are used and how they interact with the environment. Go into some of the design considerations for choosing different equipment configurations for small (5) medium (6-10) and large (10+) groups of rovers. How should tools and drive types be mixed?</h3>
 <p>- This section talks more about the different type of drive and tools. How rovers have been equiped and how to make the best out of these equipment.</p>
 
-<h3>**8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**</h3>
+<h3>8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc</h3>
  <p> - Our ideas of how to impove this project. </p> 
 
 <h1 align=center> Group-2 </h1>
