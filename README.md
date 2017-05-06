@@ -4,19 +4,54 @@
 
 ![image of mars rovers](http://i.imgur.com/8n6arMu.jpg)
 
-<h3> Group-2 </h3>
+
+
+<h1 align=center > What's in this Documentation: </h1>
+
+<h3>1.What are the movement commands? What are the scan commands?</h3>
+  <p>- Brief information about the rover movement and some of the useful commands that you might need to understand the rover. </p>
+
+<h3>2.What are the harvesting commands?</h3>
+  <p>- Moving around is good but the purpose of these rovers is to harvest as much science as they can. In this section, you will find
+    more about how rovers harvesting these sciences. </p>
+
+<h3>3.What are the communication commands?</h3>
+<p> - Each rover can't stand alone. To get the best out of each rover in less time, you need all the rovers to communicate together.
+  In this section, you will find more information about how they communicate together through some methods calls. </p>
+
+<h3>4.How are the pathfinding classes used?</h3>
+ <p> - In this section, you will go deeper to understand how to rover is deciding the shortest path to a specific science using some algorithm. </p>
+
+<h3>5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other?
+Also, what are some approaches to not getting the rovers stuck in a corner?</h3>
+<p>- In this section, we explain more about rovers step-by-step decisions based on exploring or harvesting mode. </p>
+
+<h3>6.What equipment is available to a rover and how is it configured?</h3>
+ <p> - Each rover has its own equipment. We explain how to configure each rover with its own tools.</p>
+
+<h3>7.Describe the different drive and tool types, how they are used and how they interact with the environment. Go into some of the design considerations for choosing different equipment configurations for small (5) medium (6-10) and large (10+) groups of rovers. How should tools and drive types be mixed?</h3>
+<p>- This section talks more about the different type of drive and tools. How rovers have been equiped and how to make the best out of these equipment.</p>
+
+<h3>8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc</h3>
+ <p> - Our ideas of how to impove this project. </p>
+
+<h1 align=center> Group-2 </h1>
 
 **1.What are the movement commands? What are the scan commands?**
 
 The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object.
 
-This is how the `moveNorth()` method is implemented:
+For instance, this is how the `moveNorth()` method is implemented:
 
-    	protected void moveNorth() {
-		    sendTo_RCP.println("MOVE N");
-	    }
+```
+protected void moveNorth() {
+    sendTo_RCP.println("MOVE N");
+   }
+```
 
-  All the Rovers are inside the (swarmBots) package inside the project files. All the implementation for each rover will be inside this package. Each rover will have different way to move based on the purpose and the tools of each Rover.
+The `sendTo_RCP` is an instance of the `PrintWriter` class that sends the corresponding movement message to the `RoverCommandProcessor`. Based on the direction, the RCP determines its next coordinates. For example, a direction towards `South` would mean an increase in the `y` coordinate, thus we do `yCurrentPos = yCurrentPos + 1;` for going south.
+
+All the Rovers are inside the (swarmBots) package inside the project files. All the implementation for each rover will be inside this package. Each rover will have different way to move based on the purpose and the tools of each Rover.
 
   ![image of swarmBots directory](http://i.imgur.com/LCKuaw4.png)
 
@@ -307,8 +342,8 @@ Here is a demonstration of the scenario when the Rover-02 is moving south becaus
 ![A_Star img](https://i.imgur.com/gyjKWpF.png)
 
 
-**5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other? Also, what are some approaches to
-not getting the rovers stuck in a corner?**
+ **5.What are some design approaches to be considered for mapping behavior and harvesting behavior and when/how to switch from one to the other?**
+ **Also, what are some approaches to not getting the rovers stuck in a corner?**
 
 Currently, with each step, the rover is trying to find if it’s the closest one to a science, using A-Star:
 
@@ -423,10 +458,7 @@ More information for Curiosity's sensors and detectors can be [found here](https
 
 
 
-**7.Describe the different drive and tool types, how they are used and how they interact with the
-environment. Go into some of the design considerations for choosing different equipment
-configurations for small (5) medium (6-10) and large (10+) groups of rovers. How should tools
-and drive types be mixed?**
+**7.Describe the different drive and tool types, how they are used and how they interact with the environment. Go into some of the design considerations for choosing different equipment configurations for small (5) medium (6-10) and large (10+) groups of rovers. How should tools and drive types be mixed?**
 
 The different types of drive and tool types are:
 
@@ -438,8 +470,8 @@ The different types of drive and tool types are:
 
 Next comes the extraction tools, there are two types of extraction tools:  
 
-* Drills
-* Excavators
+* Drills can extract samples of science from Rock or Gravel terrain.
+* Excavators can extract samples of science from Soil or Sand terrain.
 
 These are used in rock and gravel, soil and sand respectively. Another important tool is the scanner tools, the scanning tools are:
 
@@ -450,10 +482,13 @@ These are used in rock and gravel, soil and sand respectively. Another important
 
 Another type of tool is the Range Extender, which helps to extend the visibility from 7x7 to 11x11 square.
 
-All the rovers should have the extraction tools. Let ⅕ of the rovers be wheelers, other 4/5 be walkers and treads. The main reason for the wheelers is less because they can move faster and extract in larger amount.
+All the rovers should have the extraction tools. Let 1/3 of the rovers be wheelers, other 4/5 be walkers and treads. The main reason for the wheelers is less because they can move faster and extract in larger amount.
 
 
 **8.Make some recommendations on how to improve the implementation of the project. Make some recommendations on additional features and functions to add to the simulation such as, liquid terrain features, hex vs. square map tiles, power limitations (solar, battery, etc.), towing, chance of break downs, etc**
 
+  - One of the difficulties that might be added to the rover's movements are the ability to avoid obstacle that aren't part of their configuration.  
+  - In the future, rovers could be configured to know whether they have already Explored a certain area so they wouldn't go back there again.
+  - One of the ideas that could be implemented later is that rovers can establish a separate communication protocol for a map and another for movements.
 
 The rovers can be given the ability to sense the liquid terrain and also need to ensure that they can drill through them. While moving, it has to be ensured that the rover does not get toppled upside down. Additional features that could be added are, to prevent the parts from eroding by the exposure of cosmic rays, additional sensors can to be added to enhance each of the rovers' features.
