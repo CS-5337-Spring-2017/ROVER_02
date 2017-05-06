@@ -6,7 +6,7 @@
 
 <h3> Group-2 </h3>
 
-<h4> **1.What are the movement commands? What are the scan commands?** </h4>
+**1.What are the movement commands? What are the scan commands?**
 
 The basic movement commands are the `moveNorth()`,`moveEast()`,`moveSouth()` and `moveWest()`. These methods are called from `Rover.java` which prints a statement with help of a [PrintWriter](https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html) object.
 
@@ -126,7 +126,7 @@ Rover tools are:
 
 <img src="https://s28.postimg.org/j5lmzq2rt/Screen_Shot_2017-05-03_at_7.05.51_PM.png" width="30%" />
 
-<h3> **2.What are the harvesting commands?** </h3>
+**2.What are the harvesting commands?**
 
 The harvesting mechanism in the rovers are implemented through the `GATHER` commands and its associated mechanism. Firstly, when the `GATHER` command is issued, if the rover is positioned on a tile that contains a sample of science, and if the rover
 has the proper extraction tool for that particular tile terrain, then the science is removed from the map and placed
@@ -240,7 +240,7 @@ When the rovers are moving throughout the map, they will be conversing with the 
 ```
 In this case, we are receiving the information that Rover_02 has found `CRYSTAL` in the terrain `SOIL` at positions `x` and `y` stated above. The Communications Server API contains several other API calls that returns detailed information for `Global`, `Sciences`, `Gather`, `Coordinate` and `Misc`.
 
-<h4>  **4.How are the pathfinding classes used?**</h4>
+**4.How are the pathfinding classes used?**
 
 The basic feature of the path finding algorithm is the implementation of the A-Star algorithm. The purpose of the A-Star algorithm is to find the shortest path at each step. The rovers, while traversing through their corresponding maps, make a call to the `findPath` method in the class `A-Star` like the following:
 
